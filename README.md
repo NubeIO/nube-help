@@ -4,6 +4,7 @@
   - Droplet LoRa Dip switch settings [link to settings](https://github.com/NubeIO/nube-help/blob/master/lora/droplets/help.md)
   - Micro Edge LoRa Dip switch settings [link to settings](https://github.com/NubeIO/nube-help/blob/master/lora/micro-edge/help.md)
   - Set the UI jumpers [link to settings](https://github.com/NubeIO/nube-help/blob/master/edge-io-28/UI-Settings.md)
+  - LoRa Device - Add sensors flow [link to flow](https://github.com/NubeIO/nube-help/blob/master/flows-edge-io-controller/LoRaIn.json)
 
 
 
