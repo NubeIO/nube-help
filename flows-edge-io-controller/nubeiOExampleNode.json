@@ -17,8 +17,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 410,
-        "y": 340,
+        "x": 530,
+        "y": 120,
         "wires": [
             [
                 "9f75d391.864ad"
@@ -32,7 +32,7 @@
         "name": "Read Point",
         "info": "",
         "x": 120,
-        "y": 280,
+        "y": 60,
         "wires": []
     },
     {
@@ -45,8 +45,8 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 610,
-        "y": 340,
+        "x": 730,
+        "y": 120,
         "wires": []
     },
     {
@@ -62,7 +62,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 200,
-        "y": 340,
+        "y": 120,
         "wires": [
             [
                 "193d205b.58363"
@@ -76,28 +76,28 @@
         "name": "Write Point",
         "info": "",
         "x": 120,
-        "y": 420,
+        "y": 200,
         "wires": []
     },
     {
-        "id": "56ad7b06.5128e4",
+        "id": "c25168ca.fabd78",
         "type": "write-point",
         "z": "b7f1d2e9.60922",
         "name": "Write Point",
-        "point": "R1",
+        "point": "write point",
         "server": "271b5111.79b30e",
         "value": "0",
         "priority": "16",
-        "x": 410,
-        "y": 500,
+        "x": 530,
+        "y": 260,
         "wires": [
             [
-                "fac54945.d43fa8"
+                "4d639e0.d0a8364"
             ]
         ]
     },
     {
-        "id": "fac54945.d43fa8",
+        "id": "4d639e0.d0a8364",
         "type": "debug",
         "z": "b7f1d2e9.60922",
         "name": "",
@@ -106,27 +106,63 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 610,
-        "y": 500,
+        "x": 730,
+        "y": 260,
         "wires": []
     },
     {
-        "id": "9ce95108.42d49",
+        "id": "af0298d3.5c5268",
         "type": "inject",
         "z": "b7f1d2e9.60922",
         "name": "",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
+        "topic": "R1",
+        "payload": "1",
+        "payloadType": "num",
         "repeat": "",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 200,
-        "y": 500,
+        "x": 190,
+        "y": 260,
         "wires": [
             [
-                "56ad7b06.5128e4"
+                "51b2b598.be129c"
+            ]
+        ]
+    },
+    {
+        "id": "51b2b598.be129c",
+        "type": "function",
+        "z": "b7f1d2e9.60922",
+        "name": "",
+        "func": "msg.point = msg.topic;\nmsg.value = msg.payload;\nmsg.priority = 16;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 350,
+        "y": 260,
+        "wires": [
+            [
+                "c25168ca.fabd78"
+            ]
+        ]
+    },
+    {
+        "id": "3467ba1a.56d936",
+        "type": "inject",
+        "z": "b7f1d2e9.60922",
+        "name": "",
+        "topic": "R1",
+        "payload": "0",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 190,
+        "y": 300,
+        "wires": [
+            [
+                "51b2b598.be129c"
             ]
         ]
     },
