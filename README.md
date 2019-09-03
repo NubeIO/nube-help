@@ -17,3 +17,14 @@ Controller by default is set to DHCP
 
 
 
+### Step 2 - node-red
+
+#### Using node-red
+
+[link to node-red user-guide](https://nodered.org/docs/user-guide/)
+
+
+
+### Step 3 - using the cloud dashboard
+
+#### Using dashboard
