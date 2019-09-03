@@ -1,1 +1,278 @@
-
+[
+    {
+        "id": "4dde25f9.66e4bc",
+        "type": "tab",
+        "label": "Common Functions",
+        "disabled": true,
+        "info": ""
+    },
+    {
+        "id": "94d93b83.cf32f8",
+        "type": "comment",
+        "z": "4dde25f9.66e4bc",
+        "name": "Ethans Heart and Soul",
+        "info": "\"Hmmm there's nothing here\"",
+        "x": 140,
+        "y": 2840,
+        "wires": []
+    },
+    {
+        "id": "64b2018b.4ff0a",
+        "type": "comment",
+        "z": "4dde25f9.66e4bc",
+        "name": "Change Controller IP Address",
+        "info": "",
+        "x": 200,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "f1a8a05b.6bbb3",
+        "type": "inject",
+        "z": "4dde25f9.66e4bc",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 130,
+        "y": 120,
+        "wires": [
+            [
+                "42f50169.fc694"
+            ]
+        ]
+    },
+    {
+        "id": "42f50169.fc694",
+        "type": "exec",
+        "z": "4dde25f9.66e4bc",
+        "command": "ifconfig",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "oldrc": false,
+        "name": "ifconfig",
+        "x": 260,
+        "y": 120,
+        "wires": [
+            [
+                "32d8e14d.49b33e"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "32d8e14d.49b33e",
+        "type": "debug",
+        "z": "4dde25f9.66e4bc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 410,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "393b4c7a.349a34",
+        "type": "comment",
+        "z": "4dde25f9.66e4bc",
+        "name": "Get Local IP Address",
+        "info": "",
+        "x": 180,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "b670dd6c.27183",
+        "type": "inject",
+        "z": "4dde25f9.66e4bc",
+        "name": "Set IP to DHCP",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 160,
+        "y": 260,
+        "wires": [
+            [
+                "b78a1279.ae9cb"
+            ]
+        ]
+    },
+    {
+        "id": "b78a1279.ae9cb",
+        "type": "exec",
+        "z": "4dde25f9.66e4bc",
+        "command": "sudo connmanctl services | rev | cut -d \" \" -f1 | rev ",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "Get Service",
+        "x": 330,
+        "y": 260,
+        "wires": [
+            [
+                "a5b9c17.d98544"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "a5b9c17.d98544",
+        "type": "function",
+        "z": "4dde25f9.66e4bc",
+        "name": "Build Command",
+        "func": "if (msg.payload) {  // If success\n    msg.payload = `sudo connmanctl config ${msg.payload.trim()} --ipv4 dhcp`;\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 500,
+        "y": 260,
+        "wires": [
+            [
+                "e19ec9d0.f71e98"
+            ]
+        ]
+    },
+    {
+        "id": "97621d99.075b3",
+        "type": "debug",
+        "z": "4dde25f9.66e4bc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 790,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "b246f9c1.ca4d78",
+        "type": "inject",
+        "z": "4dde25f9.66e4bc",
+        "name": "Set IP to Static",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 160,
+        "y": 320,
+        "wires": [
+            [
+                "1f30f800.b5a808"
+            ]
+        ]
+    },
+    {
+        "id": "1f30f800.b5a808",
+        "type": "exec",
+        "z": "4dde25f9.66e4bc",
+        "command": "sudo connmanctl services | rev | cut -d \" \" -f1 | rev ",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "Get Service",
+        "x": 330,
+        "y": 320,
+        "wires": [
+            [
+                "1fb7d13a.4550ef"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "1fb7d13a.4550ef",
+        "type": "function",
+        "z": "4dde25f9.66e4bc",
+        "name": "Static Settings",
+        "func": "if (msg.payload) {  // If success\n    const ipAddress = '192.168.15.243';\n    const subnetMask = '255.255.255.0';\n    const gateway = '192.168.15.1';\n    \n    msg.payload = `sudo connmanctl config ${msg.payload.trim()} --ipv4 manual ${ipAddress} ${subnetMask} ${gateway} --nameservers 8.8.8.8 8.8.4.4`;\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 500,
+        "y": 320,
+        "wires": [
+            [
+                "9195bbbe.bec728"
+            ]
+        ]
+    },
+    {
+        "id": "29801c3f.820be4",
+        "type": "debug",
+        "z": "4dde25f9.66e4bc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 790,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "e19ec9d0.f71e98",
+        "type": "exec",
+        "z": "4dde25f9.66e4bc",
+        "command": "",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 650,
+        "y": 260,
+        "wires": [
+            [
+                "97621d99.075b3"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "9195bbbe.bec728",
+        "type": "exec",
+        "z": "4dde25f9.66e4bc",
+        "command": "",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 650,
+        "y": 320,
+        "wires": [
+            [
+                "29801c3f.820be4"
+            ],
+            [],
+            []
+        ]
+    }
+]
