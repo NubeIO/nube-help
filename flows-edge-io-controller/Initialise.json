@@ -1,1 +1,293 @@
-[{"id":"b8f7d21d.b1839","type":"tab","label":"Initialise","disabled":false,"info":""},{"id":"23cd58af.1aa0e8","type":"function","z":"b8f7d21d.b1839","name":"Thing","func":"// Gets the thing data bonescript-api and sets it into global context  \nif(msg.statusCode >= 200 && msg.statusCode < 300) {\n    global.set('thingData', msg.payload);\n    global.set('deviceid', msg.payload.thingId.substring(11)); // slices first characters 'com.nubeio'\n    global.set('clientid', \"unconfigured clientid\");\n}","outputs":1,"noerr":0,"x":570,"y":240,"wires":[[]]},{"id":"f245dc90.ac844","type":"inject","z":"b8f7d21d.b1839","name":"","topic":"","payload":"","payloadType":"date","repeat":"900","crontab":"","once":true,"onceDelay":"120","x":150,"y":240,"wires":[["617ca5f4.e1789c"]]},{"id":"13efde3.ed25c22","type":"comment","z":"b8f7d21d.b1839","name":"Initialise Global Context Variables","info":"","x":210,"y":200,"wires":[]},{"id":"e6651bc4.9c4978","type":"debug","z":"b8f7d21d.b1839","name":"","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","x":690,"y":240,"wires":[]},{"id":"4e0932c8.059bfc","type":"http request","z":"b8f7d21d.b1839","name":"Get Thing","method":"use","ret":"obj","url":"","tls":"","x":440,"y":240,"wires":[["e6651bc4.9c4978","23cd58af.1aa0e8"]]},{"id":"617ca5f4.e1789c","type":"function","z":"b8f7d21d.b1839","name":"Variables","func":"// Site and client names for the site\nconst siteName = \"Unconfigured Site\";\nconst clientName = \"Unconfigured Client\";\nconst port = 1880;\n\n// Username and password for Ditto http api (base64 of \"username:password\")\nconst dittoAuth = \"Basic bnViZS1kaXR0bzpVeVJadjh6UG9P\";\nconst dittoHost = \"https://ditto1.nube-iot.com\";\n\nconst apiAuth = global.get('apiAuth');\n\nglobal.set(\"siteName\", siteName);\nglobal.set(\"clientName\", clientName);\nglobal.set(\"port\", port);\n\nglobal.set('dittoAuth', dittoAuth);\nglobal.set('dittoHost', dittoHost);\n\nmsg = {\n    \"url\": \"http://localhost:4000/thing\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": apiAuth,\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;","outputs":1,"noerr":0,"x":300,"y":240,"wires":[["4e0932c8.059bfc"]]},{"id":"fe49695f.991dd8","type":"inject","z":"b8f7d21d.b1839","name":"","topic":"","payload":"","payloadType":"date","repeat":"900","crontab":"","once":true,"onceDelay":"100","x":150,"y":120,"wires":[["6f93dfbf.ab5be"]]},{"id":"bff0f068.189ab","type":"comment","z":"b8f7d21d.b1839","name":"Set JWT Token","info":"","x":160,"y":80,"wires":[]},{"id":"d3097dcd.44467","type":"debug","z":"b8f7d21d.b1839","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","x":1010,"y":120,"wires":[]},{"id":"cf1a6770.549858","type":"http request","z":"b8f7d21d.b1839","name":"Get JWT Token","method":"use","ret":"obj","url":"","tls":"","x":680,"y":120,"wires":[["d3097dcd.44467","70890c8.81613f4"]]},{"id":"b837d37d.93136","type":"function","z":"b8f7d21d.b1839","name":"HTTP Settings","func":"msg = {\n    \"url\": \"http://localhost:4000/user/login\",\n    \"method\": \"POST\",\n    \"headers\": {\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"username\": \"admin\",\n        \"password\": msg.payload\n    }\n};\n\nreturn msg;","outputs":1,"noerr":0,"x":500,"y":120,"wires":[["cf1a6770.549858"]]},{"id":"70890c8.81613f4","type":"function","z":"b8f7d21d.b1839","name":"Set JWT Token","func":"if (msg.statusCode === 200) {\n    global.set('apiAuth', msg.payload.token);\n    node.status({fill:\"green\", shape:\"dot\", text: \"Authenticated\"});\n} else {\n    const err = msg.payload.error || \"Error Authenticating API\";\n    node.status({fill:\"red\", shape:\"dot\", text: err});\n}\n\nreturn msg;","outputs":1,"noerr":0,"x":860,"y":120,"wires":[[]]},{"id":"6f93dfbf.ab5be","type":"file in","z":"b8f7d21d.b1839","name":"Get Password","filename":"/home/debian/bonescript-api/src/db/admin_password.txt","format":"utf8","chunk":false,"sendError":false,"x":320,"y":120,"wires":[["b837d37d.93136","71b722d0.e17e4c"]]},{"id":"71b722d0.e17e4c","type":"debug","z":"b8f7d21d.b1839","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","x":490,"y":80,"wires":[]},{"id":"373cba20.33b006","type":"http in","z":"b8f7d21d.b1839","name":"","url":"/sensor-list","method":"post","upload":false,"swaggerDoc":"","x":140,"y":360,"wires":[["fa237649.8c2938","31afedfa.2ede42","d519fc3d.54ea8"]]},{"id":"fa237649.8c2938","type":"http response","z":"b8f7d21d.b1839","name":"Response","statusCode":"200","headers":{},"x":300,"y":360,"wires":[]},{"id":"31afedfa.2ede42","type":"debug","z":"b8f7d21d.b1839","name":"","active":false,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","x":430,"y":360,"wires":[]},{"id":"d519fc3d.54ea8","type":"function","z":"b8f7d21d.b1839","name":"Store in Global Context","func":"const sensorList = msg.payload.list || [];\n\nconst thing = global.get('thingData') || {\n    features: {\n        sensorList: {\n            properties: {\n                list: []\n            }\n        }\n    }\n};\n\nthing.features.sensorList.properties.list = sensorList;\n\nglobal.set('thingData', thing);","outputs":1,"noerr":0,"x":630,"y":360,"wires":[[]]},{"id":"195ab3fc.c045ec","type":"comment","z":"b8f7d21d.b1839","name":"Get Sensor Ids On Update","info":"","x":170,"y":320,"wires":[]}]
+[
+    {
+        "id": "b8f7d21d.b1839",
+        "type": "tab",
+        "label": "Initialise",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "23cd58af.1aa0e8",
+        "type": "function",
+        "z": "b8f7d21d.b1839",
+        "name": "Thing",
+        "func": "// Gets the thing data bonescript-api and sets it into global context  \nif(msg.statusCode >= 200 && msg.statusCode < 300) {\n    global.set('thingData', msg.payload);\n    global.set('deviceid', msg.payload.thingId.substring(11)); // slices first characters 'com.nubeio'\n    global.set('clientid', \"unconfigured clientid\");\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f245dc90.ac844",
+        "type": "inject",
+        "z": "b8f7d21d.b1839",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "900",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "120",
+        "x": 150,
+        "y": 240,
+        "wires": [
+            [
+                "617ca5f4.e1789c"
+            ]
+        ]
+    },
+    {
+        "id": "13efde3.ed25c22",
+        "type": "comment",
+        "z": "b8f7d21d.b1839",
+        "name": "Initialise Global Context Variables",
+        "info": "",
+        "x": 210,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "e6651bc4.9c4978",
+        "type": "debug",
+        "z": "b8f7d21d.b1839",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 690,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "4e0932c8.059bfc",
+        "type": "http request",
+        "z": "b8f7d21d.b1839",
+        "name": "Get Thing",
+        "method": "use",
+        "ret": "obj",
+        "url": "",
+        "tls": "",
+        "x": 440,
+        "y": 240,
+        "wires": [
+            [
+                "e6651bc4.9c4978",
+                "23cd58af.1aa0e8"
+            ]
+        ]
+    },
+    {
+        "id": "617ca5f4.e1789c",
+        "type": "function",
+        "z": "b8f7d21d.b1839",
+        "name": "Variables",
+        "func": "// Site and client names for the site\nconst siteName = \"Unconfigured Site\";\nconst clientName = \"Unconfigured Client\";\nconst port = 1880;\n\n// Username and password for Ditto http api (base64 of \"username:password\")\nconst dittoAuth = \"Basic bnViZS1kaXR0bzpVeVJadjh6UG9P\";\nconst dittoHost = \"https://ditto1.nube-iot.com\";\n\nconst apiAuth = global.get('apiAuth');\n\nglobal.set(\"siteName\", siteName);\nglobal.set(\"clientName\", clientName);\nglobal.set(\"port\", port);\n\nglobal.set('dittoAuth', dittoAuth);\nglobal.set('dittoHost', dittoHost);\n\nmsg = {\n    \"url\": \"http://localhost:4000/thing\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": apiAuth,\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 300,
+        "y": 240,
+        "wires": [
+            [
+                "4e0932c8.059bfc"
+            ]
+        ]
+    },
+    {
+        "id": "fe49695f.991dd8",
+        "type": "inject",
+        "z": "b8f7d21d.b1839",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "900",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "100",
+        "x": 150,
+        "y": 120,
+        "wires": [
+            [
+                "6f93dfbf.ab5be"
+            ]
+        ]
+    },
+    {
+        "id": "bff0f068.189ab",
+        "type": "comment",
+        "z": "b8f7d21d.b1839",
+        "name": "Set JWT Token",
+        "info": "",
+        "x": 160,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "d3097dcd.44467",
+        "type": "debug",
+        "z": "b8f7d21d.b1839",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1010,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "cf1a6770.549858",
+        "type": "http request",
+        "z": "b8f7d21d.b1839",
+        "name": "Get JWT Token",
+        "method": "use",
+        "ret": "obj",
+        "url": "",
+        "tls": "",
+        "x": 680,
+        "y": 120,
+        "wires": [
+            [
+                "d3097dcd.44467",
+                "70890c8.81613f4"
+            ]
+        ]
+    },
+    {
+        "id": "b837d37d.93136",
+        "type": "function",
+        "z": "b8f7d21d.b1839",
+        "name": "HTTP Settings",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/user/login\",\n    \"method\": \"POST\",\n    \"headers\": {\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"username\": \"admin\",\n        \"password\": msg.payload\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 500,
+        "y": 120,
+        "wires": [
+            [
+                "cf1a6770.549858"
+            ]
+        ]
+    },
+    {
+        "id": "70890c8.81613f4",
+        "type": "function",
+        "z": "b8f7d21d.b1839",
+        "name": "Set JWT Token",
+        "func": "if (msg.statusCode === 200) {\n    global.set('apiAuth', msg.payload.token);\n    node.status({fill:\"green\", shape:\"dot\", text: \"Authenticated\"});\n} else {\n    const err = msg.payload.error || \"Error Authenticating API\";\n    node.status({fill:\"red\", shape:\"dot\", text: err});\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 860,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6f93dfbf.ab5be",
+        "type": "file in",
+        "z": "b8f7d21d.b1839",
+        "name": "Get Password",
+        "filename": "/home/debian/bonescript-api/src/db/admin_password.txt",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "x": 320,
+        "y": 120,
+        "wires": [
+            [
+                "b837d37d.93136",
+                "71b722d0.e17e4c"
+            ]
+        ]
+    },
+    {
+        "id": "71b722d0.e17e4c",
+        "type": "debug",
+        "z": "b8f7d21d.b1839",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 490,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "373cba20.33b006",
+        "type": "http in",
+        "z": "b8f7d21d.b1839",
+        "name": "",
+        "url": "/sensor-list",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 360,
+        "wires": [
+            [
+                "fa237649.8c2938",
+                "31afedfa.2ede42",
+                "d519fc3d.54ea8"
+            ]
+        ]
+    },
+    {
+        "id": "fa237649.8c2938",
+        "type": "http response",
+        "z": "b8f7d21d.b1839",
+        "name": "Response",
+        "statusCode": "200",
+        "headers": {},
+        "x": 300,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "31afedfa.2ede42",
+        "type": "debug",
+        "z": "b8f7d21d.b1839",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 430,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "d519fc3d.54ea8",
+        "type": "function",
+        "z": "b8f7d21d.b1839",
+        "name": "Store in Global Context",
+        "func": "const sensorList = msg.payload.list || [];\n\nconst thing = global.get('thingData') || {\n    features: {\n        sensorList: {\n            properties: {\n                list: []\n            }\n        }\n    }\n};\n\nthing.features.sensorList.properties.list = sensorList;\n\nglobal.set('thingData', thing);",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 630,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "195ab3fc.c045ec",
+        "type": "comment",
+        "z": "b8f7d21d.b1839",
+        "name": "Get Sensor Ids On Update",
+        "info": "",
+        "x": 170,
+        "y": 320,
+        "wires": []
+    }
+]
