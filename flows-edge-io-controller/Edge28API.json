@@ -1,0 +1,4873 @@
+[
+    {
+        "id": "a3de8cb7.c13b6",
+        "type": "tab",
+        "label": "Edge28 API In",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "959d1591.f9fdc8",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readPoints",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 240,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "96311d2b.84e08",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "trigger",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 240,
+        "wires": [
+            [
+                "959d1591.f9fdc8"
+            ]
+        ]
+    },
+    {
+        "id": "a4357b8f.396f68",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updatePoints",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points\",\n    \"method\": \"PATCH\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": [{\n        \"id\": \"UI1\",\n        \"type\": \"digital\"\n    }, {\n        \"id\": \"UI2\",\n        \"type\": \"digital\"\n    }, {\n        \"id\": \"UI3\",\n        \"type\": \"digital\"\n    }, {\n        \"id\": \"UI4\",\n        \"type\": \"digital\"\n    }, {\n        \"id\": \"UI5\",\n        \"type\": \"digital\"\n    }, {\n        \"id\": \"UI6\",\n        \"type\": \"digital\"\n    }, {\n        \"id\": \"UI7\",\n        \"type\": \"digital\"\n    }]\n    \n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 280,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "7cbb9967.f99828",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "deletePoints",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points\",\n    \"method\": \"DELETE\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 320,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "f72bb3ca.7e3f4",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 320,
+        "wires": [
+            [
+                "7cbb9967.f99828"
+            ]
+        ]
+    },
+    {
+        "id": "9ce9a54e.0be458",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readPointValue",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/R2/value\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 520,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "f4bd2ac.6820fd8",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "deletePoint",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/R2\",\n    \"method\": \"DELETE\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 480,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "a7bafc54.170e8",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updatePointValue",
+        "func": "let value = context.get('value')\n\nif (value === undefined || value === true) {\n    value = false;\n} else {\n    value = true;\n}\n\ncontext.set('value', value);\n\nmsg = {\n    \"url\": \"http://localhost:4000/points/R2/value\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"value\": value,\n        \"priority\": 16\n    }\n};\n\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 560,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "9755ec00.368b28",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "createPoint",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/R2\",\n    \"method\": \"POST\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 400,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "8a0956a6.43ae48",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "releasePoint",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/R2/release\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 600,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "6974e12a.c791",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read history",
+        "info": "",
+        "x": 270,
+        "y": 2260,
+        "wires": []
+    },
+    {
+        "id": "65304aff.6ed794",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readHistory",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/histories/DI1\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 2260,
+        "wires": [
+            [
+                "2fa4b0fb.b5ac7"
+            ]
+        ]
+    },
+    {
+        "id": "263c6f2a.b69e4",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read history data",
+        "info": "",
+        "x": 260,
+        "y": 2340,
+        "wires": []
+    },
+    {
+        "id": "8ad7c968.53a448",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readHistoryData",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/histories/UI1?range=2019-09-01T12:00:00,2019-09-03T12:00:00\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 2340,
+        "wires": [
+            [
+                "2fa4b0fb.b5ac7"
+            ]
+        ]
+    },
+    {
+        "id": "d8866f23.143a8",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 400,
+        "wires": [
+            [
+                "9755ec00.368b28"
+            ]
+        ]
+    },
+    {
+        "id": "90597888.af0568",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 280,
+        "wires": [
+            [
+                "a4357b8f.396f68"
+            ]
+        ]
+    },
+    {
+        "id": "35b112ff.b1c3be",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readPoint",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/R2\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 560,
+        "y": 360,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "b1ec700d.94bc3",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 360,
+        "wires": [
+            [
+                "35b112ff.b1c3be"
+            ]
+        ]
+    },
+    {
+        "id": "f4c4250b.1241b8",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 480,
+        "wires": [
+            [
+                "f4bd2ac.6820fd8"
+            ]
+        ]
+    },
+    {
+        "id": "6510d33f.c791cc",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 520,
+        "wires": [
+            [
+                "9ce9a54e.0be458"
+            ]
+        ]
+    },
+    {
+        "id": "5edfc7b8.b58478",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 560,
+        "wires": [
+            [
+                "a7bafc54.170e8"
+            ]
+        ]
+    },
+    {
+        "id": "534e7ead.f85f5",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 600,
+        "wires": [
+            [
+                "8a0956a6.43ae48"
+            ]
+        ]
+    },
+    {
+        "id": "5252b088.dc2ae",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 2260,
+        "wires": [
+            [
+                "65304aff.6ed794"
+            ]
+        ]
+    },
+    {
+        "id": "efc479dd.c6a2b8",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 2340,
+        "wires": [
+            [
+                "8ad7c968.53a448"
+            ]
+        ]
+    },
+    {
+        "id": "bf4dbdb7.34bdc",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "login",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/user/login\",\n    \"method\": \"POST\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"username\": \"admin\",\n        \"password\": \"PASSWORD\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 550,
+        "y": 140,
+        "wires": [
+            [
+                "f7185c4.c6c20a"
+            ]
+        ]
+    },
+    {
+        "id": "6e3973be.9670cc",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "trigger",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 140,
+        "wires": [
+            [
+                "bf4dbdb7.34bdc"
+            ]
+        ]
+    },
+    {
+        "id": "936d3bf0.40d2d8",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Login",
+        "info": "",
+        "x": 290,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "f7185c4.c6c20a",
+        "type": "http request",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "method": "use",
+        "ret": "obj",
+        "url": "",
+        "tls": "",
+        "x": 830,
+        "y": 140,
+        "wires": [
+            [
+                "c856309d.7d894",
+                "994cdc47.2d0a"
+            ]
+        ]
+    },
+    {
+        "id": "c856309d.7d894",
+        "type": "debug",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1150,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "994cdc47.2d0a",
+        "type": "debug",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 990,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "331aaf41.8cb3f",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "=====================================   User   =====================================",
+        "info": "",
+        "x": 730,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "f63a92c4.d37d1",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "=====================================   Points   =====================================",
+        "info": "",
+        "x": 740,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "416dbea5.4bfd2",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updatePoint",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/R2\",\n    \"method\": \"PATCH\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"value\": true,\n        \"priority\": 16\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 440,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "1f6763c4.446a3c",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 440,
+        "wires": [
+            [
+                "416dbea5.4bfd2"
+            ]
+        ]
+    },
+    {
+        "id": "7af71243.4477dc",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readPointName",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/R2/name\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 640,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "1449588a.b1c887",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updatePointName",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/R2/name\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"name\": \"Fan Enable\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 680,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "ab61285b.bda648",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 640,
+        "wires": [
+            [
+                "7af71243.4477dc"
+            ]
+        ]
+    },
+    {
+        "id": "b4481ec2.200e3",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 680,
+        "wires": [
+            [
+                "1449588a.b1c887"
+            ]
+        ]
+    },
+    {
+        "id": "2f70b279.88747e",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readPointType",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/type\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 720,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "1baafec0.45e431",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updatePointType",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/type\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"type\": \"0-10dc\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 760,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "c5a5bbd0.485358",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 720,
+        "wires": [
+            [
+                "2f70b279.88747e"
+            ]
+        ]
+    },
+    {
+        "id": "8600c743.f0cfe8",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 760,
+        "wires": [
+            [
+                "1baafec0.45e431"
+            ]
+        ]
+    },
+    {
+        "id": "9761be75.f2acc",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readPointScale",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/scale\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 800,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "f7bfaa58.561538",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updatePointScale",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/scale\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"scale\": \"0:2000\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 840,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "448318d8.f552f8",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 800,
+        "wires": [
+            [
+                "9761be75.f2acc"
+            ]
+        ]
+    },
+    {
+        "id": "9d0ad06e.f7b3a",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 840,
+        "wires": [
+            [
+                "f7bfaa58.561538"
+            ]
+        ]
+    },
+    {
+        "id": "8ac24b1d.b06258",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readPointOffset",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/offset\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 880,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "b5a5c66f.0b0c38",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updatePointOffset",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/offset\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"offset\": \"250\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 920,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "bf717f25.e898b",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 880,
+        "wires": [
+            [
+                "8ac24b1d.b06258"
+            ]
+        ]
+    },
+    {
+        "id": "e8f96637.485928",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 920,
+        "wires": [
+            [
+                "b5a5c66f.0b0c38"
+            ]
+        ]
+    },
+    {
+        "id": "b84aaf1b.ba074",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readPointPrecision",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/precision\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 960,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "996ab74e.e75ab8",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updatePointPrecision",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/precision\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"precision\": \"2\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 1000,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "41b1eec1.c1c33",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 960,
+        "wires": [
+            [
+                "b84aaf1b.ba074"
+            ]
+        ]
+    },
+    {
+        "id": "e1f6bc7e.5f59a",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1000,
+        "wires": [
+            [
+                "996ab74e.e75ab8"
+            ]
+        ]
+    },
+    {
+        "id": "76ac2cdb.60fc94",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readPointKind",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/kind\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 1040,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "c9e7a7eb.1eee78",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updatePointKind",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/kind\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"kind\": \"Str\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 1080,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "e6d617e3.65c358",
+        "type": "http request",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 890,
+        "y": 1120,
+        "wires": [
+            [
+                "77b1b1e9.6913",
+                "61686f4b.4b3c"
+            ]
+        ]
+    },
+    {
+        "id": "77b1b1e9.6913",
+        "type": "debug",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1210,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "b01b9bc7.c95b58",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1040,
+        "wires": [
+            [
+                "76ac2cdb.60fc94"
+            ]
+        ]
+    },
+    {
+        "id": "2b5481e9.582fee",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1080,
+        "wires": [
+            [
+                "c9e7a7eb.1eee78"
+            ]
+        ]
+    },
+    {
+        "id": "61686f4b.4b3c",
+        "type": "debug",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1050,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "c7555559.bd2598",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readPointUnit",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/unit\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 1120,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "5b2ad018.6472",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updatePointUnit",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/unit\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"unit\": \"kW\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 1160,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "846f30dd.be1d3",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1120,
+        "wires": [
+            [
+                "c7555559.bd2598"
+            ]
+        ]
+    },
+    {
+        "id": "73c4917d.991c2",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1160,
+        "wires": [
+            [
+                "5b2ad018.6472"
+            ]
+        ]
+    },
+    {
+        "id": "2dc90a8a.3ed206",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readPointTags",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/tags\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 1200,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "330b9b16.4d7044",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updatePointTags",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/tags\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"tags\": [\"point\", \"electric\", \"sensor\"]\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 1240,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "9c9e2cef.b6fd",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1200,
+        "wires": [
+            [
+                "2dc90a8a.3ed206"
+            ]
+        ]
+    },
+    {
+        "id": "a48b8c76.42501",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1240,
+        "wires": [
+            [
+                "330b9b16.4d7044"
+            ]
+        ]
+    },
+    {
+        "id": "9c1a2531.7d5f18",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updatePointTag",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/tag\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"tag\": \"kW\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 1280,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "99dd1f42.c52b2",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1280,
+        "wires": [
+            [
+                "9c1a2531.7d5f18"
+            ]
+        ]
+    },
+    {
+        "id": "39ad927d.0011be",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read point history settings",
+        "info": "",
+        "x": 230,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "322681b2.ff978e",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readPointHistorySettings",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/history-settings\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 610,
+        "y": 1320,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "128f32ba.8bd00d",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update point history settings",
+        "info": "",
+        "x": 220,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "42599e9f.8a836",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updatePointHistorySettings",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/history-settings\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"type\": \"periodic\",\n        \"schedule\": \"0 */15 * * * *\",\n        \"size\": 672\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 620,
+        "y": 1360,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "f098781b.5633d8",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1320,
+        "wires": [
+            [
+                "322681b2.ff978e"
+            ]
+        ]
+    },
+    {
+        "id": "14d8b10e.2a264f",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1360,
+        "wires": [
+            [
+                "42599e9f.8a836"
+            ]
+        ]
+    },
+    {
+        "id": "2a1af7c9.ceb908",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read points",
+        "info": "",
+        "x": 270,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "a0dc8b25.f23128",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update points",
+        "info": "",
+        "x": 270,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "db113ac5.d430c8",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read point",
+        "info": "",
+        "x": 280,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "85f11d8a.d7617",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Delete point",
+        "info": "",
+        "x": 270,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "1de53518.854f8b",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Delete points",
+        "info": "",
+        "x": 270,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "9412d22d.3af29",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read point value",
+        "info": "",
+        "x": 260,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "9fb0d475.723c98",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update point value",
+        "info": "",
+        "x": 250,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "33238a46.278e86",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Release point",
+        "info": "",
+        "x": 270,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "fa9a3fb2.e32ea",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Create point",
+        "info": "",
+        "x": 270,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "78a27f63.eb399",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update point",
+        "info": "",
+        "x": 270,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "5eedb5c7.3c86dc",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read point name",
+        "info": "",
+        "x": 260,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "908cb138.e10f4",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update point name",
+        "info": "",
+        "x": 250,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "1c0ea2b7.b6073d",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read point type",
+        "info": "",
+        "x": 260,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "1df0a533.bea98b",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update point type",
+        "info": "",
+        "x": 260,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "8014801.c079f8",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read point scale",
+        "info": "",
+        "x": 260,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "eb2fea01.1128e8",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update point scale",
+        "info": "",
+        "x": 250,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "f3f53a18.23c608",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read point offset",
+        "info": "",
+        "x": 260,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "5ddf0586.e4d61c",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update point offset",
+        "info": "",
+        "x": 250,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "1322a292.78207d",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read point precision",
+        "info": "",
+        "x": 250,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "91677238.e6506",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update point precision",
+        "info": "",
+        "x": 240,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "b6cf1d95.8da4a",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read point kind",
+        "info": "",
+        "x": 260,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "b156b912.f0bc08",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update point kind",
+        "info": "",
+        "x": 260,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "d5130533.d41bf8",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read point unit",
+        "info": "",
+        "x": 260,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "7b36e4aa.c742fc",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update point unit",
+        "info": "",
+        "x": 260,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "2ddbbaed.cd01b6",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read point tags",
+        "info": "",
+        "x": 260,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "30938ef7.bfc1d2",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update point tags",
+        "info": "",
+        "x": 260,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "411e3e82.9bca",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update point tag",
+        "info": "",
+        "x": 260,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "6456c652.abb4a8",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Delete point history settings",
+        "info": "",
+        "x": 220,
+        "y": 1400,
+        "wires": []
+    },
+    {
+        "id": "910c0099.21c93",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "deletePointHistorySettings",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/history-settings\",\n    \"method\": \"DELETE\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 620,
+        "y": 1400,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "684818.e52f17e8",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1400,
+        "wires": [
+            [
+                "910c0099.21c93"
+            ]
+        ]
+    },
+    {
+        "id": "78cacc7.1770434",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read point history type",
+        "info": "",
+        "x": 240,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "53a8e163.346f4",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readPointHistoryType",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/history-settings/type\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 1440,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "759c5675.1444c8",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update point history type",
+        "info": "",
+        "x": 230,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "5c6211af.9099f",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updatePointHistoryType",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/history-settings/type\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"type\": \"cov\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 610,
+        "y": 1480,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "f25db3ee.16fd5",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1440,
+        "wires": [
+            [
+                "53a8e163.346f4"
+            ]
+        ]
+    },
+    {
+        "id": "5dd349ad.a545e8",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1480,
+        "wires": [
+            [
+                "5c6211af.9099f"
+            ]
+        ]
+    },
+    {
+        "id": "ac0a6786.787078",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read point history size",
+        "info": "",
+        "x": 240,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "9c03575.461f0a8",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readPointHistorySize",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/history-settings/size\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 1520,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "16e67869.b91378",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update point history size",
+        "info": "",
+        "x": 230,
+        "y": 1560,
+        "wires": []
+    },
+    {
+        "id": "a79ca322.40c07",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updatePointHistorySize",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/history-settings/size\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"size\": 100\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 610,
+        "y": 1560,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "3d32bc54.b54234",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1520,
+        "wires": [
+            [
+                "9c03575.461f0a8"
+            ]
+        ]
+    },
+    {
+        "id": "c7cc419b.1c06b",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1560,
+        "wires": [
+            [
+                "a79ca322.40c07"
+            ]
+        ]
+    },
+    {
+        "id": "fef81cee.715e",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read point history schedule",
+        "info": "",
+        "x": 220,
+        "y": 1600,
+        "wires": []
+    },
+    {
+        "id": "68ed9f96.7f3c4",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readPointHistorySchedule",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/history-settings/schedule\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 610,
+        "y": 1600,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "8b1e87cd.553288",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update point history schedule",
+        "info": "",
+        "x": 220,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "6559a6b0.57f578",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updatePointHistorySchedule",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/history-settings/schedule\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"schedule\": \"0 */30 * * * *\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 620,
+        "y": 1640,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "f9cd93c1.aed52",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1600,
+        "wires": [
+            [
+                "68ed9f96.7f3c4"
+            ]
+        ]
+    },
+    {
+        "id": "aca45db6.d4edc",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1640,
+        "wires": [
+            [
+                "6559a6b0.57f578"
+            ]
+        ]
+    },
+    {
+        "id": "b5636dfe.2a30c",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read point history tolerance",
+        "info": "",
+        "x": 220,
+        "y": 1680,
+        "wires": []
+    },
+    {
+        "id": "41c91789.9b5628",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readPointHistoryTolerance",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/history-settings/tolerance\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 620,
+        "y": 1680,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "c88cf685.0488e8",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update point history tolerance",
+        "info": "",
+        "x": 220,
+        "y": 1720,
+        "wires": []
+    },
+    {
+        "id": "6eede0c8.7c694",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updatePointHistoryTolerance",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/history-settings/tolerance\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"tolerance\": 2\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 620,
+        "y": 1720,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "d9d25594.942d98",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1680,
+        "wires": [
+            [
+                "41c91789.9b5628"
+            ]
+        ]
+    },
+    {
+        "id": "1d7297a1.4fb438",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1720,
+        "wires": [
+            [
+                "6eede0c8.7c694"
+            ]
+        ]
+    },
+    {
+        "id": "a73fafa3.91ba9",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "=====================================   Histories   =====================================",
+        "info": "",
+        "x": 720,
+        "y": 2060,
+        "wires": []
+    },
+    {
+        "id": "4c64d04a.d2ccc",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read histories",
+        "info": "",
+        "x": 270,
+        "y": 2100,
+        "wires": []
+    },
+    {
+        "id": "f14217.2c19ade8",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readHistories",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/histories\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 2100,
+        "wires": [
+            [
+                "2fa4b0fb.b5ac7"
+            ]
+        ]
+    },
+    {
+        "id": "14318b4e.aec2e5",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 2100,
+        "wires": [
+            [
+                "f14217.2c19ade8"
+            ]
+        ]
+    },
+    {
+        "id": "a8984e59.580ee",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Delete histories",
+        "info": "",
+        "x": 260,
+        "y": 2140,
+        "wires": []
+    },
+    {
+        "id": "3f47f4cc.3beefc",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "deleteHistories",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/histories\",\n    \"method\": \"DELETE\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 2140,
+        "wires": [
+            [
+                "2fa4b0fb.b5ac7"
+            ]
+        ]
+    },
+    {
+        "id": "b42afdb5.9bcaf",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 2140,
+        "wires": [
+            [
+                "3f47f4cc.3beefc"
+            ]
+        ]
+    },
+    {
+        "id": "479b0596.4f464c",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read histories data",
+        "info": "",
+        "x": 250,
+        "y": 2180,
+        "wires": []
+    },
+    {
+        "id": "67c62d6e.ac7d84",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readHistoriesData",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/histories/data\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 2180,
+        "wires": [
+            [
+                "2fa4b0fb.b5ac7"
+            ]
+        ]
+    },
+    {
+        "id": "433c024d.6abbac",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 2180,
+        "wires": [
+            [
+                "67c62d6e.ac7d84"
+            ]
+        ]
+    },
+    {
+        "id": "3f39b939.c0a0d6",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Delete histories data",
+        "info": "",
+        "x": 250,
+        "y": 2220,
+        "wires": []
+    },
+    {
+        "id": "f281c210.87677",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "deleteHistoriesData",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/histories/data\",\n    \"method\": \"DELETE\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 2220,
+        "wires": [
+            [
+                "2fa4b0fb.b5ac7"
+            ]
+        ]
+    },
+    {
+        "id": "2fa4b0fb.b5ac7",
+        "type": "http request",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 850,
+        "y": 2220,
+        "wires": [
+            [
+                "916d429e.e36ed",
+                "f311a5dc.efd478"
+            ]
+        ]
+    },
+    {
+        "id": "916d429e.e36ed",
+        "type": "debug",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1170,
+        "y": 2220,
+        "wires": []
+    },
+    {
+        "id": "d951714f.60d2",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 2220,
+        "wires": [
+            [
+                "f281c210.87677"
+            ]
+        ]
+    },
+    {
+        "id": "f311a5dc.efd478",
+        "type": "debug",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1010,
+        "y": 2220,
+        "wires": []
+    },
+    {
+        "id": "4eed865a.120f28",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Delete history",
+        "info": "",
+        "x": 270,
+        "y": 2300,
+        "wires": []
+    },
+    {
+        "id": "a02ee666.356f58",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "deleteHistory",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/histories/UI1\",\n    \"method\": \"DELETE\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 2300,
+        "wires": [
+            [
+                "2fa4b0fb.b5ac7"
+            ]
+        ]
+    },
+    {
+        "id": "1e39fa63.d375a6",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Delete history data",
+        "info": "",
+        "x": 250,
+        "y": 2380,
+        "wires": []
+    },
+    {
+        "id": "39400292.1e1e6e",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "deleteHistoryData",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/histories/UI1/data\",\n    \"method\": \"DELETE\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 2380,
+        "wires": [
+            [
+                "2fa4b0fb.b5ac7"
+            ]
+        ]
+    },
+    {
+        "id": "fcbe6738.9016d8",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 2300,
+        "wires": [
+            [
+                "a02ee666.356f58"
+            ]
+        ]
+    },
+    {
+        "id": "6db93493.0f704c",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 2380,
+        "wires": [
+            [
+                "39400292.1e1e6e"
+            ]
+        ]
+    },
+    {
+        "id": "f5cb690c.fee258",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update point ditto settings",
+        "info": "",
+        "x": 230,
+        "y": 1800,
+        "wires": []
+    },
+    {
+        "id": "b2385e7a.9227c",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Delete point ditto settings",
+        "info": "",
+        "x": 230,
+        "y": 1840,
+        "wires": []
+    },
+    {
+        "id": "3f92e70b.6f03e8",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read point ditto type",
+        "info": "",
+        "x": 250,
+        "y": 1880,
+        "wires": []
+    },
+    {
+        "id": "8a8ab08a.8e471",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update point ditto type",
+        "info": "",
+        "x": 240,
+        "y": 1920,
+        "wires": []
+    },
+    {
+        "id": "8fadc675.99c258",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read point ditto tolerance",
+        "info": "",
+        "x": 230,
+        "y": 1960,
+        "wires": []
+    },
+    {
+        "id": "b30ad4f4.661c48",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update point ditto tolerance",
+        "info": "",
+        "x": 220,
+        "y": 2000,
+        "wires": []
+    },
+    {
+        "id": "e075b87c.64c478",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updatePointDittoSettings",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/ditto-settings\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"enable\": true,\n        \"tolerance\": 0.2\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 610,
+        "y": 1800,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "ce16df39.9ca58",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1800,
+        "wires": [
+            [
+                "e075b87c.64c478"
+            ]
+        ]
+    },
+    {
+        "id": "b101857e.59bb38",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "deletePointDittoSettings",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/ditto-settings\",\n    \"method\": \"DELETE\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 610,
+        "y": 1840,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "99868f55.48ec8",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1840,
+        "wires": [
+            [
+                "b101857e.59bb38"
+            ]
+        ]
+    },
+    {
+        "id": "fc3a9029.f85b",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readPointDittoEnable",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/ditto-settings/enable\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 1880,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "9cca1d71.9aab1",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updatePointDittoEnable",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/ditto-settings/enable\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"enable\": true\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 610,
+        "y": 1920,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "577d146d.302cac",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1880,
+        "wires": [
+            [
+                "fc3a9029.f85b"
+            ]
+        ]
+    },
+    {
+        "id": "f7a9ae71.ee5d3",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1920,
+        "wires": [
+            [
+                "9cca1d71.9aab1"
+            ]
+        ]
+    },
+    {
+        "id": "e6dda594.ef1388",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readPointDittoTolerance",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/ditto-settings/tolerance\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 610,
+        "y": 1960,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "8939b144.db4db",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updatePointDittoTolerance",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/ditto-settings/tolerance\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"tolerance\": 0.15\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 620,
+        "y": 2000,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "381c3ca1.380994",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1960,
+        "wires": [
+            [
+                "e6dda594.ef1388"
+            ]
+        ]
+    },
+    {
+        "id": "ebfd907a.bd00a",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 2000,
+        "wires": [
+            [
+                "8939b144.db4db"
+            ]
+        ]
+    },
+    {
+        "id": "cea423be.fbd96",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read point ditto settings",
+        "info": "",
+        "x": 240,
+        "y": 1760,
+        "wires": []
+    },
+    {
+        "id": "3baef4d2.f3617c",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readPointDittoSettings",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UI1/ditto-settings\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 1760,
+        "wires": [
+            [
+                "e6d617e3.65c358"
+            ]
+        ]
+    },
+    {
+        "id": "c9f3d83c.a5aff8",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 1760,
+        "wires": [
+            [
+                "3baef4d2.f3617c"
+            ]
+        ]
+    },
+    {
+        "id": "6cef4f37.c9cab",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read attributes",
+        "info": "",
+        "x": 260,
+        "y": 2480,
+        "wires": []
+    },
+    {
+        "id": "93923bdb.9810f8",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update attributes",
+        "info": "",
+        "x": 260,
+        "y": 2520,
+        "wires": []
+    },
+    {
+        "id": "d853bed1.d4bbb",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readAttributes",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/attributes\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 2480,
+        "wires": [
+            [
+                "5d01b25b.e1653c"
+            ]
+        ]
+    },
+    {
+        "id": "376ecb67.c18154",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updateAttributes",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/attributes\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"client\": \"CBA-00085\",\n        \"country\": \"Australia\",\n        \"state\": \"new state\",\n        \"region\": \"new region\",\n        \"site\": \"CBA\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 2520,
+        "wires": [
+            [
+                "5d01b25b.e1653c"
+            ]
+        ]
+    },
+    {
+        "id": "541cd5ed.6b4f6c",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 2480,
+        "wires": [
+            [
+                "d853bed1.d4bbb"
+            ]
+        ]
+    },
+    {
+        "id": "584f128a.246a5c",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 2520,
+        "wires": [
+            [
+                "376ecb67.c18154"
+            ]
+        ]
+    },
+    {
+        "id": "195c21de.e1b5ce",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read client attribute",
+        "info": "",
+        "x": 250,
+        "y": 2560,
+        "wires": []
+    },
+    {
+        "id": "5f9a0b3c.c91234",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update client attribute",
+        "info": "",
+        "x": 240,
+        "y": 2600,
+        "wires": []
+    },
+    {
+        "id": "c5a3e10a.a54ae",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readClientAttribute",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/attributes/client\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 2560,
+        "wires": [
+            [
+                "5d01b25b.e1653c"
+            ]
+        ]
+    },
+    {
+        "id": "bcc6fb3f.4daf98",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updateClientAttributes",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/attributes/client\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"client\": \"updated client\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 2600,
+        "wires": [
+            [
+                "5d01b25b.e1653c"
+            ]
+        ]
+    },
+    {
+        "id": "b3aa0787.f5c378",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 2560,
+        "wires": [
+            [
+                "c5a3e10a.a54ae"
+            ]
+        ]
+    },
+    {
+        "id": "38198a81.e86736",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 2600,
+        "wires": [
+            [
+                "bcc6fb3f.4daf98"
+            ]
+        ]
+    },
+    {
+        "id": "603e7e3e.7d6e",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read country attribute",
+        "info": "",
+        "x": 240,
+        "y": 2640,
+        "wires": []
+    },
+    {
+        "id": "531a2429.de00dc",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update country attribute",
+        "info": "",
+        "x": 240,
+        "y": 2680,
+        "wires": []
+    },
+    {
+        "id": "2b217293.3b9eee",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readCountryAttribute",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/attributes/country\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 2640,
+        "wires": [
+            [
+                "5d01b25b.e1653c"
+            ]
+        ]
+    },
+    {
+        "id": "3810b0c7.1040f",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updateCountryAttributes",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/attributes/country\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"country\": \"updated country\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 610,
+        "y": 2680,
+        "wires": [
+            [
+                "5d01b25b.e1653c"
+            ]
+        ]
+    },
+    {
+        "id": "5d01b25b.e1653c",
+        "type": "http request",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 850,
+        "y": 2680,
+        "wires": [
+            [
+                "da4bf286.7673b",
+                "b3b4c660.650f48"
+            ]
+        ]
+    },
+    {
+        "id": "da4bf286.7673b",
+        "type": "debug",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1170,
+        "y": 2680,
+        "wires": []
+    },
+    {
+        "id": "c44f66ee.4d2e78",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 2640,
+        "wires": [
+            [
+                "2b217293.3b9eee"
+            ]
+        ]
+    },
+    {
+        "id": "cb2ed9cf.691e58",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 2680,
+        "wires": [
+            [
+                "3810b0c7.1040f"
+            ]
+        ]
+    },
+    {
+        "id": "b3b4c660.650f48",
+        "type": "debug",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1010,
+        "y": 2680,
+        "wires": []
+    },
+    {
+        "id": "46166d49.061094",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read state attribute",
+        "info": "",
+        "x": 250,
+        "y": 2720,
+        "wires": []
+    },
+    {
+        "id": "5f086265.52cf4c",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update state attribute",
+        "info": "",
+        "x": 240,
+        "y": 2760,
+        "wires": []
+    },
+    {
+        "id": "1f18c3f6.385dec",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readStateAttribute",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/attributes/state\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 2720,
+        "wires": [
+            [
+                "5d01b25b.e1653c"
+            ]
+        ]
+    },
+    {
+        "id": "cf7319ed.09c018",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updateStateAttributes",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/attributes/state\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"state\": \"updated state\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 2760,
+        "wires": [
+            [
+                "5d01b25b.e1653c"
+            ]
+        ]
+    },
+    {
+        "id": "efed828f.9d3b8",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 2720,
+        "wires": [
+            [
+                "1f18c3f6.385dec"
+            ]
+        ]
+    },
+    {
+        "id": "67b5bc7c.cae824",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 2760,
+        "wires": [
+            [
+                "cf7319ed.09c018"
+            ]
+        ]
+    },
+    {
+        "id": "ded37493.cd93f8",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read region attribute",
+        "info": "",
+        "x": 240,
+        "y": 2800,
+        "wires": []
+    },
+    {
+        "id": "4113c96e.e0cc08",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update region attribute",
+        "info": "",
+        "x": 240,
+        "y": 2840,
+        "wires": []
+    },
+    {
+        "id": "1fe15378.93838d",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readRegionAttribute",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/attributes/region\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 2800,
+        "wires": [
+            [
+                "5d01b25b.e1653c"
+            ]
+        ]
+    },
+    {
+        "id": "9d001b7b.fbbca8",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updateRegionAttributes",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/attributes/region\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"region\": \"updated region\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 610,
+        "y": 2840,
+        "wires": [
+            [
+                "5d01b25b.e1653c"
+            ]
+        ]
+    },
+    {
+        "id": "1a30135a.f2922d",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 2800,
+        "wires": [
+            [
+                "1fe15378.93838d"
+            ]
+        ]
+    },
+    {
+        "id": "6ffc87fb.5e5a08",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 2840,
+        "wires": [
+            [
+                "9d001b7b.fbbca8"
+            ]
+        ]
+    },
+    {
+        "id": "59b20bee.ad5f44",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read site attribute",
+        "info": "",
+        "x": 250,
+        "y": 2880,
+        "wires": []
+    },
+    {
+        "id": "5cea243.dffc2dc",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update site attribute",
+        "info": "",
+        "x": 250,
+        "y": 2920,
+        "wires": []
+    },
+    {
+        "id": "7290b842.1dfcb8",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readSiteAttribute",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/attributes/site\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 2880,
+        "wires": [
+            [
+                "5d01b25b.e1653c"
+            ]
+        ]
+    },
+    {
+        "id": "f7154d1f.1955",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updateSiteAttributes",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/attributes/site\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"site\": \"updated site\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 2920,
+        "wires": [
+            [
+                "5d01b25b.e1653c"
+            ]
+        ]
+    },
+    {
+        "id": "2c2d7ad6.01b4d6",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 2880,
+        "wires": [
+            [
+                "7290b842.1dfcb8"
+            ]
+        ]
+    },
+    {
+        "id": "f5aa497b.8963e8",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 2920,
+        "wires": [
+            [
+                "f7154d1f.1955"
+            ]
+        ]
+    },
+    {
+        "id": "2dc3bece.6a4812",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "=====================================   Attributes   =====================================",
+        "info": "",
+        "x": 730,
+        "y": 2440,
+        "wires": []
+    },
+    {
+        "id": "33d97600.8679da",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read settings",
+        "info": "",
+        "x": 270,
+        "y": 3020,
+        "wires": []
+    },
+    {
+        "id": "edd6264b.dd4758",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readSettings",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/settings\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 3020,
+        "wires": [
+            [
+                "f6f54569.f361c8"
+            ]
+        ]
+    },
+    {
+        "id": "24bbc75d.152068",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3020,
+        "wires": [
+            [
+                "edd6264b.dd4758"
+            ]
+        ]
+    },
+    {
+        "id": "c2f7bb5d.fb97e8",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read edge loop settings",
+        "info": "",
+        "x": 230,
+        "y": 3060,
+        "wires": []
+    },
+    {
+        "id": "9603e460.b1ebe8",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update edge loop settings",
+        "info": "",
+        "x": 230,
+        "y": 3100,
+        "wires": []
+    },
+    {
+        "id": "3e2cdf96.d41d3",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readEdgeLoop",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/settings/edge-loop\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 3060,
+        "wires": [
+            [
+                "f6f54569.f361c8"
+            ]
+        ]
+    },
+    {
+        "id": "933fa7cd.3f7128",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updateEdgeLoop",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/settings/edge-loop\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"edgeLoop\": 250\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 3100,
+        "wires": [
+            [
+                "f6f54569.f361c8"
+            ]
+        ]
+    },
+    {
+        "id": "f40bf236.5324f",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3060,
+        "wires": [
+            [
+                "3e2cdf96.d41d3"
+            ]
+        ]
+    },
+    {
+        "id": "38621058.f2a34",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3100,
+        "wires": [
+            [
+                "933fa7cd.3f7128"
+            ]
+        ]
+    },
+    {
+        "id": "5b71c9a8.d7d748",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "=====================================   Settings   =====================================",
+        "info": "",
+        "x": 720,
+        "y": 2980,
+        "wires": []
+    },
+    {
+        "id": "25d519d0.cd0e86",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read ditto enable settings",
+        "info": "",
+        "x": 230,
+        "y": 3140,
+        "wires": []
+    },
+    {
+        "id": "ab2e58bd.e4f318",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update ditto enable settings",
+        "info": "",
+        "x": 220,
+        "y": 3180,
+        "wires": []
+    },
+    {
+        "id": "2ae3b565.1a11ea",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readDittoEnable",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/settings/ditto-enable\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 3140,
+        "wires": [
+            [
+                "f6f54569.f361c8"
+            ]
+        ]
+    },
+    {
+        "id": "69c740e5.8786",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updateDittoEnable",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/settings/ditto-enable\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"enable\": false\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 3180,
+        "wires": [
+            [
+                "f6f54569.f361c8"
+            ]
+        ]
+    },
+    {
+        "id": "f6f54569.f361c8",
+        "type": "http request",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 850,
+        "y": 3180,
+        "wires": [
+            [
+                "dfe61ad5.f2e338",
+                "7ea45182.82d0f"
+            ]
+        ]
+    },
+    {
+        "id": "dfe61ad5.f2e338",
+        "type": "debug",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1170,
+        "y": 3180,
+        "wires": []
+    },
+    {
+        "id": "b21e477c.c70de8",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3140,
+        "wires": [
+            [
+                "2ae3b565.1a11ea"
+            ]
+        ]
+    },
+    {
+        "id": "fac9add1.b7fa7",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3180,
+        "wires": [
+            [
+                "69c740e5.8786"
+            ]
+        ]
+    },
+    {
+        "id": "7ea45182.82d0f",
+        "type": "debug",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1010,
+        "y": 3180,
+        "wires": []
+    },
+    {
+        "id": "aae091a5.266a1",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read ditto host settings",
+        "info": "",
+        "x": 240,
+        "y": 3220,
+        "wires": []
+    },
+    {
+        "id": "34012e14.e92d52",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update ditto host settings",
+        "info": "",
+        "x": 230,
+        "y": 3260,
+        "wires": []
+    },
+    {
+        "id": "26617d55.7bc5f2",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readDittoHost",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/settings/ditto-host\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 3220,
+        "wires": [
+            [
+                "f6f54569.f361c8"
+            ]
+        ]
+    },
+    {
+        "id": "ac91cd93.131b7",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updateDittoHost",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/settings/ditto-host\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"host\": \"https://ditto1.nube-iot.com\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 3260,
+        "wires": [
+            [
+                "f6f54569.f361c8"
+            ]
+        ]
+    },
+    {
+        "id": "afa716d8.c984d8",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3220,
+        "wires": [
+            [
+                "26617d55.7bc5f2"
+            ]
+        ]
+    },
+    {
+        "id": "df51164c.896778",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3260,
+        "wires": [
+            [
+                "ac91cd93.131b7"
+            ]
+        ]
+    },
+    {
+        "id": "9d9d1d18.90172",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read ditto http basic settings",
+        "info": "",
+        "x": 220,
+        "y": 3300,
+        "wires": []
+    },
+    {
+        "id": "f9b80481.629d58",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update ditto http basic settings",
+        "info": "",
+        "x": 210,
+        "y": 3340,
+        "wires": []
+    },
+    {
+        "id": "3168f254.c77a6e",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readDittoHttpBasic",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/settings/ditto-http-basic\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 3300,
+        "wires": [
+            [
+                "f6f54569.f361c8"
+            ]
+        ]
+    },
+    {
+        "id": "2d8cd633.cee63a",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updateDittoHttpBasic",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/settings/ditto-http-basic\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"httpBasic\": \"Basic bnViZWlvOm51YjNpMA==\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 3340,
+        "wires": [
+            [
+                "f6f54569.f361c8"
+            ]
+        ]
+    },
+    {
+        "id": "92fef4d4.0acb08",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3300,
+        "wires": [
+            [
+                "3168f254.c77a6e"
+            ]
+        ]
+    },
+    {
+        "id": "41d323bb.bbd29c",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3340,
+        "wires": [
+            [
+                "2d8cd633.cee63a"
+            ]
+        ]
+    },
+    {
+        "id": "bd4d37d2.de0528",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read schedules",
+        "info": "",
+        "x": 260,
+        "y": 3520,
+        "wires": []
+    },
+    {
+        "id": "d7b2adb.e49b05",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readSchedules",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/schedules\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 3520,
+        "wires": [
+            [
+                "55117fb5.6314"
+            ]
+        ]
+    },
+    {
+        "id": "3daed1e4.1c3e5e",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3520,
+        "wires": [
+            [
+                "d7b2adb.e49b05"
+            ]
+        ]
+    },
+    {
+        "id": "3ed63fe7.2e766",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Delete schedules",
+        "info": "",
+        "x": 260,
+        "y": 3560,
+        "wires": []
+    },
+    {
+        "id": "5bb9505a.0c99e",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "deleteSchedules",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/schedules/\",\n    \"method\": \"DELETE\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 3560,
+        "wires": [
+            [
+                "55117fb5.6314"
+            ]
+        ]
+    },
+    {
+        "id": "2042741c.64b90c",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3560,
+        "wires": [
+            [
+                "5bb9505a.0c99e"
+            ]
+        ]
+    },
+    {
+        "id": "752998a.38aa968",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "=====================================   Schedules   =====================================",
+        "info": "",
+        "x": 730,
+        "y": 3400,
+        "wires": []
+    },
+    {
+        "id": "d2fd224a.f6ccf",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read weekly schedules",
+        "info": "",
+        "x": 240,
+        "y": 3640,
+        "wires": []
+    },
+    {
+        "id": "dea013cb.b4b78",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readWeeklySchedules",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/schedules/weekly\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 3640,
+        "wires": [
+            [
+                "55117fb5.6314"
+            ]
+        ]
+    },
+    {
+        "id": "34eeea35.568ca6",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3640,
+        "wires": [
+            [
+                "dea013cb.b4b78"
+            ]
+        ]
+    },
+    {
+        "id": "101d6cac.567693",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Delete weekly schedules",
+        "info": "",
+        "x": 230,
+        "y": 3680,
+        "wires": []
+    },
+    {
+        "id": "8084ec70.0054d",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "deleteWeeklySchedules",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/schedules/weekly\",\n    \"method\": \"DELETE\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 610,
+        "y": 3680,
+        "wires": [
+            [
+                "55117fb5.6314"
+            ]
+        ]
+    },
+    {
+        "id": "33288c86.522ef4",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3680,
+        "wires": [
+            [
+                "8084ec70.0054d"
+            ]
+        ]
+    },
+    {
+        "id": "59cdcaac.bffcc4",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "createWeeklySchedule",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/schedules/weekly\",\n    \"method\": \"POST\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        name: \"test\",\n        value: 23,\n        color: \"#339999\",\n        days: [\"monday\", \"tuesday\"],\n        start: \"08:00:00\",\n        end: \"17:00:00\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 3600,
+        "wires": [
+            [
+                "55117fb5.6314"
+            ]
+        ]
+    },
+    {
+        "id": "86b704b5.b2f5f8",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3600,
+        "wires": [
+            [
+                "59cdcaac.bffcc4"
+            ]
+        ]
+    },
+    {
+        "id": "5ce37394.6e9eac",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Create weekly schedule",
+        "info": "",
+        "x": 240,
+        "y": 3600,
+        "wires": []
+    },
+    {
+        "id": "afe0fac9.e87378",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read weekly schedule",
+        "info": "",
+        "x": 240,
+        "y": 3720,
+        "wires": []
+    },
+    {
+        "id": "c538c55c.54eb48",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readWeeklySchedule",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/schedules/weekly/b9016346-da14-4e14-89ad-d837e92530d5\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 3720,
+        "wires": [
+            [
+                "55117fb5.6314"
+            ]
+        ]
+    },
+    {
+        "id": "223cf6e5.2e0b1a",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3720,
+        "wires": [
+            [
+                "c538c55c.54eb48"
+            ]
+        ]
+    },
+    {
+        "id": "f6718753.0e2e28",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Delete weekly schedule",
+        "info": "",
+        "x": 240,
+        "y": 3760,
+        "wires": []
+    },
+    {
+        "id": "5f9f3d0b.c63884",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "deleteWeeklySchedule",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/schedules/weekly/b9016346-da14-4e14-89ad-d837e92530d5\",\n    \"method\": \"DELETE\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 3760,
+        "wires": [
+            [
+                "55117fb5.6314"
+            ]
+        ]
+    },
+    {
+        "id": "55117fb5.6314",
+        "type": "http request",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "method": "use",
+        "ret": "obj",
+        "url": "",
+        "tls": "",
+        "x": 850,
+        "y": 3680,
+        "wires": [
+            [
+                "b34a2387.be8b2",
+                "f2e0f9d7.726ea8"
+            ]
+        ]
+    },
+    {
+        "id": "b34a2387.be8b2",
+        "type": "debug",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1170,
+        "y": 3680,
+        "wires": []
+    },
+    {
+        "id": "b1978c9b.b47ea",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3760,
+        "wires": [
+            [
+                "5f9f3d0b.c63884"
+            ]
+        ]
+    },
+    {
+        "id": "f2e0f9d7.726ea8",
+        "type": "debug",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1010,
+        "y": 3680,
+        "wires": []
+    },
+    {
+        "id": "87c237b0.770b08",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read events schedules",
+        "info": "",
+        "x": 240,
+        "y": 3840,
+        "wires": []
+    },
+    {
+        "id": "6b750.fb29e8b",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readEventsSchedules",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/schedules/events\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 3840,
+        "wires": [
+            [
+                "55117fb5.6314"
+            ]
+        ]
+    },
+    {
+        "id": "53cc1e54.949e2",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3840,
+        "wires": [
+            [
+                "6b750.fb29e8b"
+            ]
+        ]
+    },
+    {
+        "id": "27133cde.5270f4",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Delete events schedules",
+        "info": "",
+        "x": 230,
+        "y": 3880,
+        "wires": []
+    },
+    {
+        "id": "2400e92d.b604a6",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "deleteEventsSchedules",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/schedules/events\",\n    \"method\": \"DELETE\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 610,
+        "y": 3880,
+        "wires": [
+            [
+                "55117fb5.6314"
+            ]
+        ]
+    },
+    {
+        "id": "ed9095df.7ed1c8",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3880,
+        "wires": [
+            [
+                "2400e92d.b604a6"
+            ]
+        ]
+    },
+    {
+        "id": "577ed89c.7cd2d8",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "createEventsSchedule",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/schedules/events\",\n    \"method\": \"POST\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        name: \"event test\",\n        value: 23,\n        color: \"#339999\",\n        dates: [{\n            start: \"2018-11-06T01:04:39.348Z\",\n            end: \"2018-11-07T01:04:39.348Z\"\n        }]\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 3800,
+        "wires": [
+            [
+                "55117fb5.6314"
+            ]
+        ]
+    },
+    {
+        "id": "8e329c4b.30c4f",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3800,
+        "wires": [
+            [
+                "577ed89c.7cd2d8"
+            ]
+        ]
+    },
+    {
+        "id": "9a8cf3a5.76417",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Create events schedule",
+        "info": "",
+        "x": 240,
+        "y": 3800,
+        "wires": []
+    },
+    {
+        "id": "f09696b4.bfd098",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read events schedule",
+        "info": "",
+        "x": 240,
+        "y": 3920,
+        "wires": []
+    },
+    {
+        "id": "a8aa6009.63959",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readEventsSchedule",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/schedules/events/5c59c116-f7b7-4119-806b-b318751c3f71\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 3920,
+        "wires": [
+            [
+                "55117fb5.6314"
+            ]
+        ]
+    },
+    {
+        "id": "5abd5d3c.d7bca4",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3920,
+        "wires": [
+            [
+                "a8aa6009.63959"
+            ]
+        ]
+    },
+    {
+        "id": "e2ef2024.c96ea",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Delete events schedule",
+        "info": "",
+        "x": 240,
+        "y": 3960,
+        "wires": []
+    },
+    {
+        "id": "376f4f24.3af4c",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "deleteEventsSchedule",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/schedules/events/5c59c116-f7b7-4119-806b-b318751c3f71\",\n    \"method\": \"DELETE\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 600,
+        "y": 3960,
+        "wires": [
+            [
+                "55117fb5.6314"
+            ]
+        ]
+    },
+    {
+        "id": "5ff65e14.a4378",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3960,
+        "wires": [
+            [
+                "376f4f24.3af4c"
+            ]
+        ]
+    },
+    {
+        "id": "491e3246.1d93fc",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update schedules",
+        "info": "",
+        "x": 250,
+        "y": 3440,
+        "wires": []
+    },
+    {
+        "id": "7b855128.f080d",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updateSchedules",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/schedules\",\n    \"method\": \"PATCH\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"weekly\": [\n            {\n                id: \"asd\",\n                name: \"id\",\n                value: 23,\n                color: \"#339999\",\n                days: [\"monday\", \"tuesday\"],\n                start: \"08:00:00\",\n                end: \"17:00:00\"\n            },\n            {\n                id: \"123123\",\n                name: \"1212312312313123\",\n                value: 23,\n                color: \"#339999\",\n                days: [\"monday\", \"tuesday\"],\n                start: \"08:00:00\",\n                end: \"17:00:00\"\n            }\n        ]\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 3440,
+        "wires": [
+            [
+                "55117fb5.6314"
+            ]
+        ]
+    },
+    {
+        "id": "873e9f2d.d12ac",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3440,
+        "wires": [
+            [
+                "7b855128.f080d"
+            ]
+        ]
+    },
+    {
+        "id": "d24a6806.b0ec08",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Put schedules",
+        "info": "",
+        "x": 270,
+        "y": 3480,
+        "wires": []
+    },
+    {
+        "id": "15f12347.b006fd",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "putSchedules",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/schedules\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"weekly\": [\n            {\n                id: \"asd\",\n                name: \"id\",\n                value: 23,\n                color: \"#339999\",\n                days: [\"monday\", \"tuesday\"],\n                start: \"08:00:00\",\n                end: \"17:00:00\"\n            },\n            {\n                id: \"123123\",\n                name: \"1212312312313123\",\n                value: 23,\n                color: \"#339999\",\n                days: [\"monday\", \"tuesday\"],\n                start: \"08:00:00\",\n                end: \"17:00:00\"\n            }\n        ]\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 3480,
+        "wires": [
+            [
+                "55117fb5.6314"
+            ]
+        ]
+    },
+    {
+        "id": "25bfd291.efa15e",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 3480,
+        "wires": [
+            [
+                "15f12347.b006fd"
+            ]
+        ]
+    },
+    {
+        "id": "2e8ae9cc.f6bbe6",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read Notes",
+        "info": "",
+        "x": 270,
+        "y": 4060,
+        "wires": []
+    },
+    {
+        "id": "b1f6abaf.2fb2b8",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readNotes",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/notes\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 4060,
+        "wires": [
+            [
+                "34706c5c.3a5694"
+            ]
+        ]
+    },
+    {
+        "id": "fcc3ddd0.42d88",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 4060,
+        "wires": [
+            [
+                "b1f6abaf.2fb2b8"
+            ]
+        ]
+    },
+    {
+        "id": "8198ae75.3b82e",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Create Notes",
+        "info": "",
+        "x": 270,
+        "y": 4100,
+        "wires": []
+    },
+    {
+        "id": "fa4d4322.04847",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "createNotes",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/notes\",\n    \"method\": \"POST\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": [\n        {\n            \"pointID\": \"UI1\",\n            \"name\": \"UI1\", \n            \"author\": \"Aidan\",\n            \"commissioned\": \"TF - 2019-02-11\"\n        }\n    ]\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 4100,
+        "wires": [
+            [
+                "34706c5c.3a5694"
+            ]
+        ]
+    },
+    {
+        "id": "3b1d4877.33c548",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 4100,
+        "wires": [
+            [
+                "fa4d4322.04847"
+            ]
+        ]
+    },
+    {
+        "id": "dd2985c2.c40e88",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "=====================================   Notes   =====================================",
+        "info": "",
+        "x": 710,
+        "y": 4020,
+        "wires": []
+    },
+    {
+        "id": "29a67ca.c5c3a84",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Update Notes",
+        "info": "",
+        "x": 270,
+        "y": 4140,
+        "wires": []
+    },
+    {
+        "id": "8bbccd0d.1711b",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "updateNotes",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/notes\",\n    \"method\": \"PATCH\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": [\n        {\n            \"pointID\": \"UI1\",\n            \"name\": \"UI1\", \n            \"author\": \"Aidan\",\n            \"commissioned\": \"TF - 2019-02-05\"\n        }\n    ]\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 4140,
+        "wires": [
+            [
+                "34706c5c.3a5694"
+            ]
+        ]
+    },
+    {
+        "id": "34706c5c.3a5694",
+        "type": "http request",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "method": "use",
+        "ret": "obj",
+        "url": "",
+        "tls": "",
+        "x": 850,
+        "y": 4120,
+        "wires": [
+            [
+                "73e44767.769cd8",
+                "909e31a8.f1a26"
+            ]
+        ]
+    },
+    {
+        "id": "73e44767.769cd8",
+        "type": "debug",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1170,
+        "y": 4120,
+        "wires": []
+    },
+    {
+        "id": "1e054e42.491ef2",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 4140,
+        "wires": [
+            [
+                "8bbccd0d.1711b"
+            ]
+        ]
+    },
+    {
+        "id": "909e31a8.f1a26",
+        "type": "debug",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1010,
+        "y": 4120,
+        "wires": []
+    },
+    {
+        "id": "d8ea4ef0.27d6d",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Delete Notes",
+        "info": "",
+        "x": 270,
+        "y": 4180,
+        "wires": []
+    },
+    {
+        "id": "9ee59f74.fa782",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "deleteNotes",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/notes\",\n    \"method\": \"DELETE\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": [\"UI1\"]\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 4180,
+        "wires": [
+            [
+                "34706c5c.3a5694"
+            ]
+        ]
+    },
+    {
+        "id": "c66ccffd.fb723",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 4180,
+        "wires": [
+            [
+                "9ee59f74.fa782"
+            ]
+        ]
+    },
+    {
+        "id": "c4da17b4.eb09b8",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Read Sensor List",
+        "info": "",
+        "x": 260,
+        "y": 4280,
+        "wires": []
+    },
+    {
+        "id": "755e7914.2f9e58",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "readSensorList",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/sensor-list\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 4280,
+        "wires": [
+            [
+                "60020c3d.2b0c44"
+            ]
+        ]
+    },
+    {
+        "id": "46e19113.f6fee",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 4280,
+        "wires": [
+            [
+                "755e7914.2f9e58"
+            ]
+        ]
+    },
+    {
+        "id": "cbcfc7f6.241fe8",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Add Sensor Id",
+        "info": "",
+        "x": 270,
+        "y": 4320,
+        "wires": []
+    },
+    {
+        "id": "dd7e2a8d.89c338",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "addSensorId",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/sensor-list\",\n    \"method\": \"POST\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": [\n        \"A2B254BC\"    \n    ]\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 4320,
+        "wires": [
+            [
+                "60020c3d.2b0c44"
+            ]
+        ]
+    },
+    {
+        "id": "8dabe4fc.492778",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 4320,
+        "wires": [
+            [
+                "dd7e2a8d.89c338"
+            ]
+        ]
+    },
+    {
+        "id": "e4c6698e.a4dff8",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "=====================================   Sensor List   =====================================",
+        "info": "",
+        "x": 730,
+        "y": 4240,
+        "wires": []
+    },
+    {
+        "id": "416c12d8.67e8dc",
+        "type": "comment",
+        "z": "a3de8cb7.c13b6",
+        "name": "Delete Sensor Id",
+        "info": "",
+        "x": 260,
+        "y": 4360,
+        "wires": []
+    },
+    {
+        "id": "c5c3cb3a.3063b8",
+        "type": "function",
+        "z": "a3de8cb7.c13b6",
+        "name": "deleteSensorId",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/sensor-list\",\n    \"method\": \"DELETE\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": [\n        \"A2B254BC\"    \n    ]\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 580,
+        "y": 4360,
+        "wires": [
+            [
+                "60020c3d.2b0c44"
+            ]
+        ]
+    },
+    {
+        "id": "60020c3d.2b0c44",
+        "type": "http request",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "method": "use",
+        "ret": "obj",
+        "url": "",
+        "tls": "",
+        "x": 850,
+        "y": 4320,
+        "wires": [
+            [
+                "c23ede2d.70f92",
+                "b961b169.cb67b"
+            ]
+        ]
+    },
+    {
+        "id": "c23ede2d.70f92",
+        "type": "debug",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1170,
+        "y": 4320,
+        "wires": []
+    },
+    {
+        "id": "e414eb05.21eb58",
+        "type": "inject",
+        "z": "a3de8cb7.c13b6",
+        "name": "inject",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 430,
+        "y": 4360,
+        "wires": [
+            [
+                "c5c3cb3a.3063b8"
+            ]
+        ]
+    },
+    {
+        "id": "b961b169.cb67b",
+        "type": "debug",
+        "z": "a3de8cb7.c13b6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1010,
+        "y": 4320,
+        "wires": []
+    }
+]
