@@ -1,0 +1,144 @@
+[
+    {
+        "id": "b7f1d2e9.60922",
+        "type": "tab",
+        "label": "Nube Read/Write",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "193d205b.58363",
+        "type": "read-point",
+        "z": "b7f1d2e9.60922",
+        "name": "Read Point",
+        "point": "UI1",
+        "server": "271b5111.79b30e",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 410,
+        "y": 340,
+        "wires": [
+            [
+                "9f75d391.864ad"
+            ]
+        ]
+    },
+    {
+        "id": "e5bd7271.0669a",
+        "type": "comment",
+        "z": "b7f1d2e9.60922",
+        "name": "Read Point",
+        "info": "",
+        "x": 120,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "9f75d391.864ad",
+        "type": "debug",
+        "z": "b7f1d2e9.60922",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 610,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "dd3ed2b9.8cd59",
+        "type": "inject",
+        "z": "b7f1d2e9.60922",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 200,
+        "y": 340,
+        "wires": [
+            [
+                "193d205b.58363"
+            ]
+        ]
+    },
+    {
+        "id": "40c88a97.aa9254",
+        "type": "comment",
+        "z": "b7f1d2e9.60922",
+        "name": "Write Point",
+        "info": "",
+        "x": 120,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "56ad7b06.5128e4",
+        "type": "write-point",
+        "z": "b7f1d2e9.60922",
+        "name": "Write Point",
+        "point": "R1",
+        "server": "271b5111.79b30e",
+        "value": "0",
+        "priority": "16",
+        "x": 410,
+        "y": 500,
+        "wires": [
+            [
+                "fac54945.d43fa8"
+            ]
+        ]
+    },
+    {
+        "id": "fac54945.d43fa8",
+        "type": "debug",
+        "z": "b7f1d2e9.60922",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 610,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "9ce95108.42d49",
+        "type": "inject",
+        "z": "b7f1d2e9.60922",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 200,
+        "y": 500,
+        "wires": [
+            [
+                "56ad7b06.5128e4"
+            ]
+        ]
+    },
+    {
+        "id": "271b5111.79b30e",
+        "type": "edge-server",
+        "z": "",
+        "name": "",
+        "host": "192.168.6.2",
+        "port": "4000",
+        "username": "admin",
+        "password": "83e54fc20f2f",
+        "remote": true
+    }
+]
