@@ -11,7 +11,7 @@ Controller by default is set to DHCP
 
 #### Using node-red
 
-[link to download video - Dashboard login](https://nodered.org/docs/user-guide/)
+[link to node-red user-guide](https://nodered.org/docs/user-guide/)
 
 
 
