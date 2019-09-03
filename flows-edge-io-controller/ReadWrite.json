@@ -1,0 +1,1919 @@
+[
+    {
+        "id": "84dd51f0.b55ce",
+        "type": "tab",
+        "label": "Read/Write Controls",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "8b83f17b.c6e",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "UO1",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UO1/value\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"value\": msg.payload,\n        \"priority\": 16\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 990,
+        "y": 120,
+        "wires": [
+            [
+                "7c0882ad.e7062c"
+            ]
+        ]
+    },
+    {
+        "id": "7c0882ad.e7062c",
+        "type": "http request",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1130,
+        "y": 120,
+        "wires": [
+            [
+                "b229cb89.bc2248"
+            ]
+        ]
+    },
+    {
+        "id": "b229cb89.bc2248",
+        "type": "debug",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1290,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "2fecd8d7.d55a28",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 160,
+        "wires": [
+            [
+                "8b83f17b.c6e"
+            ]
+        ]
+    },
+    {
+        "id": "d55eed98.4a752",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "DO1",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/DO1/value\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"value\": msg.payload,\n        \"priority\": 16\n    }\n};\n\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 990,
+        "y": 1080,
+        "wires": [
+            [
+                "a6d1aa01.d93448"
+            ]
+        ]
+    },
+    {
+        "id": "a6d1aa01.d93448",
+        "type": "http request",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1130,
+        "y": 1080,
+        "wires": [
+            [
+                "601a1ce4.0f24b4"
+            ]
+        ]
+    },
+    {
+        "id": "601a1ce4.0f24b4",
+        "type": "debug",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1290,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "85cb6063.adf1c",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 1060,
+        "wires": [
+            [
+                "d55eed98.4a752"
+            ]
+        ]
+    },
+    {
+        "id": "2494c801.734cd8",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 1100,
+        "wires": [
+            [
+                "d55eed98.4a752"
+            ]
+        ]
+    },
+    {
+        "id": "992115fc.8884d8",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "DO2",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/DO2/value\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"value\": msg.payload,\n        \"priority\": 16\n    }\n};\n\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 990,
+        "y": 1180,
+        "wires": [
+            [
+                "ba15f75f.4243f8"
+            ]
+        ]
+    },
+    {
+        "id": "ba15f75f.4243f8",
+        "type": "http request",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1130,
+        "y": 1180,
+        "wires": [
+            [
+                "4f2a07a9.003e98"
+            ]
+        ]
+    },
+    {
+        "id": "4f2a07a9.003e98",
+        "type": "debug",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1290,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "fd82deeb.5d548",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 1160,
+        "wires": [
+            [
+                "992115fc.8884d8"
+            ]
+        ]
+    },
+    {
+        "id": "50be92a6.134c1c",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 1200,
+        "wires": [
+            [
+                "992115fc.8884d8"
+            ]
+        ]
+    },
+    {
+        "id": "4f11a0a8.546df",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "DO3",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/DO3/value\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"value\": msg.payload,\n        \"priority\": 16\n    }\n};\n\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 990,
+        "y": 1280,
+        "wires": [
+            [
+                "234bba67.540bc6"
+            ]
+        ]
+    },
+    {
+        "id": "234bba67.540bc6",
+        "type": "http request",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1130,
+        "y": 1280,
+        "wires": [
+            [
+                "8920d48b.e229e8"
+            ]
+        ]
+    },
+    {
+        "id": "8920d48b.e229e8",
+        "type": "debug",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1290,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "8845b842.cb42d8",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 1260,
+        "wires": [
+            [
+                "4f11a0a8.546df"
+            ]
+        ]
+    },
+    {
+        "id": "22f1ba44.b50d56",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 1300,
+        "wires": [
+            [
+                "4f11a0a8.546df"
+            ]
+        ]
+    },
+    {
+        "id": "797684ca.41a6ac",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "DO4",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/DO4/value\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"value\": msg.payload,\n        \"priority\": 16\n    }\n};\n\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 990,
+        "y": 1380,
+        "wires": [
+            [
+                "429a9fe7.38d9b"
+            ]
+        ]
+    },
+    {
+        "id": "429a9fe7.38d9b",
+        "type": "http request",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1130,
+        "y": 1380,
+        "wires": [
+            [
+                "604d0ee7.97a5f"
+            ]
+        ]
+    },
+    {
+        "id": "604d0ee7.97a5f",
+        "type": "debug",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1290,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "7455055a.dda4bc",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 1360,
+        "wires": [
+            [
+                "797684ca.41a6ac"
+            ]
+        ]
+    },
+    {
+        "id": "d87b3a75.6cec28",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 1400,
+        "wires": [
+            [
+                "797684ca.41a6ac"
+            ]
+        ]
+    },
+    {
+        "id": "99aaecdd.c694c",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "DO5",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/DO5/value\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"value\": msg.payload,\n        \"priority\": 16\n    }\n};\n\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 990,
+        "y": 1480,
+        "wires": [
+            [
+                "bfd8b9ff.e6f858"
+            ]
+        ]
+    },
+    {
+        "id": "bfd8b9ff.e6f858",
+        "type": "http request",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1130,
+        "y": 1480,
+        "wires": [
+            [
+                "9b98581a.5d3438"
+            ]
+        ]
+    },
+    {
+        "id": "9b98581a.5d3438",
+        "type": "debug",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1290,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "131a7f11.546081",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 1460,
+        "wires": [
+            [
+                "99aaecdd.c694c"
+            ]
+        ]
+    },
+    {
+        "id": "d4a93d35.f13cc",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 1500,
+        "wires": [
+            [
+                "99aaecdd.c694c"
+            ]
+        ]
+    },
+    {
+        "id": "4407bb10.08a094",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "R1",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/R1/value\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"value\": msg.payload,\n        \"priority\": 16\n    }\n};\n\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 990,
+        "y": 1580,
+        "wires": [
+            [
+                "64a5c233.ae069c"
+            ]
+        ]
+    },
+    {
+        "id": "64a5c233.ae069c",
+        "type": "http request",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1130,
+        "y": 1580,
+        "wires": [
+            [
+                "bcf9ef3d.31e1f"
+            ]
+        ]
+    },
+    {
+        "id": "bcf9ef3d.31e1f",
+        "type": "debug",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1290,
+        "y": 1580,
+        "wires": []
+    },
+    {
+        "id": "52b8a200.6398d",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 1560,
+        "wires": [
+            [
+                "4407bb10.08a094"
+            ]
+        ]
+    },
+    {
+        "id": "55beff88.7969c",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 1600,
+        "wires": [
+            [
+                "4407bb10.08a094"
+            ]
+        ]
+    },
+    {
+        "id": "601a16c9.99f738",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "R2",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/R2/value\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"value\": msg.payload,\n        \"priority\": 16\n    }\n};\n\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 990,
+        "y": 1680,
+        "wires": [
+            [
+                "94ca24df.34cc38"
+            ]
+        ]
+    },
+    {
+        "id": "94ca24df.34cc38",
+        "type": "http request",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1130,
+        "y": 1680,
+        "wires": [
+            [
+                "f4bc2883.078ba8"
+            ]
+        ]
+    },
+    {
+        "id": "f4bc2883.078ba8",
+        "type": "debug",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1290,
+        "y": 1680,
+        "wires": []
+    },
+    {
+        "id": "8f07586e.72b098",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 1660,
+        "wires": [
+            [
+                "601a16c9.99f738"
+            ]
+        ]
+    },
+    {
+        "id": "51a5961.f5b1468",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 1700,
+        "wires": [
+            [
+                "601a16c9.99f738"
+            ]
+        ]
+    },
+    {
+        "id": "d9331541.f124c8",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "12",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 80,
+        "wires": [
+            [
+                "8b83f17b.c6e"
+            ]
+        ]
+    },
+    {
+        "id": "35c2afc4.50696",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "6",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 120,
+        "wires": [
+            [
+                "8b83f17b.c6e"
+            ]
+        ]
+    },
+    {
+        "id": "57befdfe.c791b4",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "UO2",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UO2/value\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"value\": msg.payload,\n        \"priority\": 16\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 990,
+        "y": 260,
+        "wires": [
+            [
+                "7ef1eaae.d5f264"
+            ]
+        ]
+    },
+    {
+        "id": "7ef1eaae.d5f264",
+        "type": "http request",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1130,
+        "y": 260,
+        "wires": [
+            [
+                "1d0db220.886dae"
+            ]
+        ]
+    },
+    {
+        "id": "1d0db220.886dae",
+        "type": "debug",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1290,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "9ede9403.5e7e18",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 300,
+        "wires": [
+            [
+                "57befdfe.c791b4"
+            ]
+        ]
+    },
+    {
+        "id": "cc759a4b.7f6a08",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "12",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 220,
+        "wires": [
+            [
+                "57befdfe.c791b4"
+            ]
+        ]
+    },
+    {
+        "id": "b0f40af4.9b9358",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "6",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 260,
+        "wires": [
+            [
+                "57befdfe.c791b4"
+            ]
+        ]
+    },
+    {
+        "id": "5c07ff02.5dfb8",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "UO3",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UO3/value\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"value\": msg.payload,\n        \"priority\": 16\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 990,
+        "y": 400,
+        "wires": [
+            [
+                "75557b6b.a4de74"
+            ]
+        ]
+    },
+    {
+        "id": "75557b6b.a4de74",
+        "type": "http request",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1130,
+        "y": 400,
+        "wires": [
+            [
+                "81467f5a.1023a"
+            ]
+        ]
+    },
+    {
+        "id": "81467f5a.1023a",
+        "type": "debug",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1290,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "4e3cf77d.b35228",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 440,
+        "wires": [
+            [
+                "5c07ff02.5dfb8"
+            ]
+        ]
+    },
+    {
+        "id": "abc6ddc5.1082f",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "12",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 360,
+        "wires": [
+            [
+                "5c07ff02.5dfb8"
+            ]
+        ]
+    },
+    {
+        "id": "711ef999.1aa8b8",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "6",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 400,
+        "wires": [
+            [
+                "5c07ff02.5dfb8"
+            ]
+        ]
+    },
+    {
+        "id": "7cc3228a.adcd6c",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "UO4",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UO4/value\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"value\": msg.payload,\n        \"priority\": 16\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 990,
+        "y": 540,
+        "wires": [
+            [
+                "b0c9b6d1.f83e08"
+            ]
+        ]
+    },
+    {
+        "id": "b0c9b6d1.f83e08",
+        "type": "http request",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1130,
+        "y": 540,
+        "wires": [
+            [
+                "939be2bb.6af9"
+            ]
+        ]
+    },
+    {
+        "id": "939be2bb.6af9",
+        "type": "debug",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1290,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "44e77d39.d79b44",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 580,
+        "wires": [
+            [
+                "7cc3228a.adcd6c"
+            ]
+        ]
+    },
+    {
+        "id": "b489b1f9.60dcf",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "12",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 500,
+        "wires": [
+            [
+                "7cc3228a.adcd6c"
+            ]
+        ]
+    },
+    {
+        "id": "e4e53c45.08673",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "6",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 540,
+        "wires": [
+            [
+                "7cc3228a.adcd6c"
+            ]
+        ]
+    },
+    {
+        "id": "8b560cc5.6dff",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "UO5",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UO5/value\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"value\": msg.payload,\n        \"priority\": 16\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 990,
+        "y": 680,
+        "wires": [
+            [
+                "4b5d128.74c6aec"
+            ]
+        ]
+    },
+    {
+        "id": "4b5d128.74c6aec",
+        "type": "http request",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1130,
+        "y": 680,
+        "wires": [
+            [
+                "6f0910d7.89cfa"
+            ]
+        ]
+    },
+    {
+        "id": "6f0910d7.89cfa",
+        "type": "debug",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1290,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "c2179daa.1eee1",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 720,
+        "wires": [
+            [
+                "8b560cc5.6dff"
+            ]
+        ]
+    },
+    {
+        "id": "6eee4dbc.397d84",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "12",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 640,
+        "wires": [
+            [
+                "8b560cc5.6dff"
+            ]
+        ]
+    },
+    {
+        "id": "3ec21127.85cbbe",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "6",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 680,
+        "wires": [
+            [
+                "8b560cc5.6dff"
+            ]
+        ]
+    },
+    {
+        "id": "599e80f4.e97d5",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "UO6",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UO6/value\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"value\": msg.payload,\n        \"priority\": 16\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 990,
+        "y": 820,
+        "wires": [
+            [
+                "134836b7.baa249"
+            ]
+        ]
+    },
+    {
+        "id": "134836b7.baa249",
+        "type": "http request",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1130,
+        "y": 820,
+        "wires": [
+            [
+                "366dab0c.c54834"
+            ]
+        ]
+    },
+    {
+        "id": "366dab0c.c54834",
+        "type": "debug",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1290,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "3f151733.b927a8",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 860,
+        "wires": [
+            [
+                "599e80f4.e97d5"
+            ]
+        ]
+    },
+    {
+        "id": "201dddd5.307322",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "12",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 780,
+        "wires": [
+            [
+                "599e80f4.e97d5"
+            ]
+        ]
+    },
+    {
+        "id": "c6822bb9.767118",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "6",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 820,
+        "wires": [
+            [
+                "599e80f4.e97d5"
+            ]
+        ]
+    },
+    {
+        "id": "a1a573f3.10d83",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "UO7",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points/UO7/value\",\n    \"method\": \"PUT\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    },\n    \"payload\": {\n        \"value\": msg.payload,\n        \"priority\": 16\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 990,
+        "y": 960,
+        "wires": [
+            [
+                "4710b49f.8a8e6c"
+            ]
+        ]
+    },
+    {
+        "id": "4710b49f.8a8e6c",
+        "type": "http request",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1130,
+        "y": 960,
+        "wires": [
+            [
+                "e2b4727f.aaa5a"
+            ]
+        ]
+    },
+    {
+        "id": "e2b4727f.aaa5a",
+        "type": "debug",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1290,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "b1bc5835.4ff8d8",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 1000,
+        "wires": [
+            [
+                "a1a573f3.10d83"
+            ]
+        ]
+    },
+    {
+        "id": "ab668043.d42f7",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "12",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 920,
+        "wires": [
+            [
+                "a1a573f3.10d83"
+            ]
+        ]
+    },
+    {
+        "id": "122b08d4.cbf9b7",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "6",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 850,
+        "y": 960,
+        "wires": [
+            [
+                "a1a573f3.10d83"
+            ]
+        ]
+    },
+    {
+        "id": "cdfff7a.9e1c308",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "Read Points",
+        "func": "msg = {\n    \"url\": \"http://localhost:4000/points\",\n    \"method\": \"GET\",\n    \"headers\": {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 170,
+        "y": 920,
+        "wires": [
+            [
+                "1d465c4e.49d744"
+            ]
+        ]
+    },
+    {
+        "id": "1d465c4e.49d744",
+        "type": "http request",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "method": "use",
+        "ret": "obj",
+        "url": "",
+        "tls": "",
+        "x": 170,
+        "y": 960,
+        "wires": [
+            [
+                "6afe8967.e5aa78"
+            ]
+        ]
+    },
+    {
+        "id": "f5d44dbb.12c4a",
+        "type": "inject",
+        "z": "84dd51f0.b55ce",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "1",
+        "x": 170,
+        "y": 880,
+        "wires": [
+            [
+                "cdfff7a.9e1c308"
+            ]
+        ]
+    },
+    {
+        "id": "aa14561.62fc9a8",
+        "type": "comment",
+        "z": "84dd51f0.b55ce",
+        "name": "Read All Points",
+        "info": "",
+        "x": 160,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "6afe8967.e5aa78",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "Split Points",
+        "func": "return [\n    { payload: msg.payload.UI1 || {}},\n    { payload: msg.payload.UI2 || {}},\n    { payload: msg.payload.UI3 || {}},\n    { payload: msg.payload.UI4 || {}},\n    { payload: msg.payload.UI5 || {}},\n    { payload: msg.payload.UI6 || {}},\n    { payload: msg.payload.UI7 || {}},\n    { payload: msg.payload.DI1 || {}},\n    { payload: msg.payload.DI2 || {}},\n    { payload: msg.payload.DI3 || {}},\n    { payload: msg.payload.DI4 || {}},\n    { payload: msg.payload.DI5 || {}},\n    { payload: msg.payload.DI6 || {}},\n    { payload: msg.payload.DI7 || {}},\n    { payload: msg.payload.UO1 || {}},\n    { payload: msg.payload.UO2 || {}},\n    { payload: msg.payload.UO3 || {}},\n    { payload: msg.payload.UO4 || {}},\n    { payload: msg.payload.UO5 || {}},\n    { payload: msg.payload.UO6 || {}},\n    { payload: msg.payload.UO7 || {}},\n    { payload: msg.payload.DO1 || {}},\n    { payload: msg.payload.DO2 || {}},\n    { payload: msg.payload.DO3 || {}},\n    { payload: msg.payload.DO4 || {}},\n    { payload: msg.payload.DO5 || {}},\n    { payload: msg.payload.R1 || {}},\n    { payload: msg.payload.R2 || {}}\n];",
+        "outputs": 28,
+        "noerr": 0,
+        "x": 370,
+        "y": 960,
+        "wires": [
+            [
+                "38358166.cd354e"
+            ],
+            [
+                "3beeb4d9.13be6c"
+            ],
+            [
+                "3214f1a1.9210fe"
+            ],
+            [
+                "90d008c2.be0f78"
+            ],
+            [
+                "ea23085e.2eb5a8"
+            ],
+            [
+                "a405a9a5.557838"
+            ],
+            [
+                "9ff46e14.6a302"
+            ],
+            [
+                "4768f4e8.ae489c"
+            ],
+            [
+                "98e515e6.8b99e8"
+            ],
+            [
+                "3f94461c.e8884a"
+            ],
+            [
+                "df202893.893808"
+            ],
+            [
+                "d6339227.f32ca"
+            ],
+            [
+                "9795bcc3.a3331"
+            ],
+            [
+                "f26221e2.4f623"
+            ],
+            [
+                "d30c24d6.6388c8"
+            ],
+            [
+                "d3601f69.037a6"
+            ],
+            [
+                "65ffc44d.fa34ac"
+            ],
+            [
+                "21a3a4da.8b7f6c"
+            ],
+            [
+                "46298cf5.4987b4"
+            ],
+            [
+                "f42d276b.61fc78"
+            ],
+            [
+                "fa9293b1.c555e"
+            ],
+            [
+                "4fcef990.f83178"
+            ],
+            [
+                "a484041e.f2a368"
+            ],
+            [
+                "8807df12.1fdd4"
+            ],
+            [
+                "4128253d.df4bcc"
+            ],
+            [
+                "cef8855.915f278"
+            ],
+            [
+                "990536a6.8b2ee8"
+            ],
+            [
+                "6cfd10c2.ba5c5"
+            ]
+        ]
+    },
+    {
+        "id": "38358166.cd354e",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "UI1",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3beeb4d9.13be6c",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "UI2",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3214f1a1.9210fe",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "UI3",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "90d008c2.be0f78",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "UI4",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ea23085e.2eb5a8",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "UI5",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a405a9a5.557838",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "UI6",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9ff46e14.6a302",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "UI7",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4768f4e8.ae489c",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "DI1",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "98e515e6.8b99e8",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "DI2",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3f94461c.e8884a",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "DI3",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "df202893.893808",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "DI4",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d6339227.f32ca",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "DI5",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9795bcc3.a3331",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "DI6",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 800,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f26221e2.4f623",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "DI7",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d30c24d6.6388c8",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "UO1",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value + \" @ \" + msg.payload.priority});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d3601f69.037a6",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "UO2",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value + \" @ \" + msg.payload.priority});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 980,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "65ffc44d.fa34ac",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "UO3",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value + \" @ \" + msg.payload.priority});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 1040,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "21a3a4da.8b7f6c",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "UO4",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value + \" @ \" + msg.payload.priority});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 1100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "46298cf5.4987b4",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "UO5",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value + \" @ \" + msg.payload.priority});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 1160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f42d276b.61fc78",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "UO6",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value + \" @ \" + msg.payload.priority});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 1220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fa9293b1.c555e",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "UO7",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value + \" @ \" + msg.payload.priority});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 1280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4fcef990.f83178",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "DO1",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value + \" @ \" + msg.payload.priority});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 1340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a484041e.f2a368",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "DO2",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value + \" @ \" + msg.payload.priority});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 1400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8807df12.1fdd4",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "DO3",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value + \" @ \" + msg.payload.priority});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 1460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4128253d.df4bcc",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "DO4",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value + \" @ \" + msg.payload.priority});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 1520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cef8855.915f278",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "DO5",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value + \" @ \" + msg.payload.priority});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 1580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "990536a6.8b2ee8",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "R1",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value + \" @ \" + msg.payload.priority});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 1640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6cfd10c2.ba5c5",
+        "type": "function",
+        "z": "84dd51f0.b55ce",
+        "name": "R2",
+        "func": "if (Object.prototype.hasOwnProperty.call(msg.payload, 'value')) {\n    node.status({fill:msg.payload.value ? \"green\" : \"red\", shape:\"dot\", text:msg.payload.value + \" @ \" + msg.payload.priority});\n} else {\n    node.status({fill:\"grey\", shape:\"dot\", text:\"Point not found\"});\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 1700,
+        "wires": [
+            []
+        ]
+    }
+]
