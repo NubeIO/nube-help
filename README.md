@@ -2,8 +2,9 @@
  - Operation manuals [link to docs](https://github.com/NubeIO/nube-help/tree/master/user-manuals)
   - Operation manuals [link to videos for the edge controller](https://github.com/NubeIO/nube-help/tree/master/videos-edge-dashboard)
   - Droplet LoRa Dip switch settings [link to settings](https://github.com/NubeIO/nube-help/blob/master/lora/droplets/help.md)
+  - Micro Edge LoRa Dip switch settings [link to settings](https://github.com/NubeIO/nube-help/blob/master/lora/micro-edge/help.md)
 
-
+https://github.com/NubeIO/nube-help/blob/master/lora/micro-edge/help.md
 
 ## Step 1 - Controller login 
 
