@@ -1,0 +1,1223 @@
+[
+    {
+        "id": "aa2d183a.e049d8",
+        "type": "subflow",
+        "name": "Watchdog",
+        "info": "",
+        "in": [
+            {
+                "x": 200,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "ac2126a9.7f0048"
+                    },
+                    {
+                        "id": "3c0b9e21.cea0f2"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 600,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "ac2126a9.7f0048",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 600,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "3dcdc4ac.007d3c",
+                        "port": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "ac2126a9.7f0048",
+        "type": "function",
+        "z": "aa2d183a.e049d8",
+        "name": "Add Timestamp",
+        "func": "var d = new Date();\nvar timestring = d.toString();\nmsg.timestamp = timestring;\nreturn msg; ",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 340,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3c0b9e21.cea0f2",
+        "type": "trigger",
+        "z": "aa2d183a.e049d8",
+        "op1": "",
+        "op2": "1",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "1",
+        "extend": true,
+        "units": "hr",
+        "reset": "*",
+        "name": "",
+        "x": 330,
+        "y": 160,
+        "wires": [
+            [
+                "3dcdc4ac.007d3c"
+            ]
+        ]
+    },
+    {
+        "id": "3dcdc4ac.007d3c",
+        "type": "function",
+        "z": "aa2d183a.e049d8",
+        "name": "",
+        "func": "msg.payload = \"Warning: .219 down for > 1 hour\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 470,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b7697d09.8c3b2",
+        "type": "tab",
+        "label": "LoRa In",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "545bde35.f8d72",
+        "type": "function",
+        "z": "b7697d09.8c3b2",
+        "name": "Last Message",
+        "func": "var time = msg.timestamp; \nnode.status({fill:\"blue\",shape:\"dot\",text:\"Last Message: \" + time });\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 480,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d4ad367e.4b2248",
+        "type": "function",
+        "z": "b7697d09.8c3b2",
+        "name": "No ! ",
+        "func": "hexString = msg.payload;\nvar payload = hexString.substring(0, 1);\nif(payload == \"!\") { return; } \nelse {return msg;}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 270,
+        "y": 400,
+        "wires": [
+            [
+                "519b8eaf.53776"
+            ]
+        ]
+    },
+    {
+        "id": "185a8135.77c64f",
+        "type": "subflow:aa2d183a.e049d8",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "x": 280,
+        "y": 120,
+        "wires": [
+            [
+                "545bde35.f8d72"
+            ],
+            [
+                "aca4d20d.d7d91"
+            ]
+        ]
+    },
+    {
+        "id": "622439be.ed39a8",
+        "type": "e-mail",
+        "z": "b7697d09.8c3b2",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "name": "service-update@enviroservices.com.au",
+        "dname": "",
+        "x": 720,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "70a32e33.e7bca",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 270,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "213e2423.7367ac",
+        "type": "serial in",
+        "z": "b7697d09.8c3b2",
+        "name": "LoRa",
+        "serial": "e61c6fae.b4d69",
+        "x": 110,
+        "y": 260,
+        "wires": [
+            [
+                "d4ad367e.4b2248",
+                "70a32e33.e7bca",
+                "185a8135.77c64f"
+            ]
+        ]
+    },
+    {
+        "id": "aca4d20d.d7d91",
+        "type": "function",
+        "z": "b7697d09.8c3b2",
+        "name": "Build Email",
+        "func": "const siteName = global.get(\"siteName\"); \nconst clientName = global.get(\"clientName\"); \n\nmsg.payload = \"LoRa Module Reset | Client: \" + clientName + \" | Site: \" + siteName + \" | IP: \" + msg.payload;\nmsg.topic = \"LoRa Module Reset | Client: \" + clientName + \" | Site: \" + siteName;\n\nreturn msg; ",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 470,
+        "y": 160,
+        "wires": [
+            [
+                "622439be.ed39a8"
+            ]
+        ]
+    },
+    {
+        "id": "e701157d.de9378",
+        "type": "inject",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 130,
+        "y": 620,
+        "wires": [
+            [
+                "9339db0.e01c628"
+            ]
+        ]
+    },
+    {
+        "id": "9339db0.e01c628",
+        "type": "exec",
+        "z": "b7697d09.8c3b2",
+        "command": "bash /home/debian/bonescript-api/systemd/nubeio-enable-uart-pins.sh",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "oldrc": false,
+        "name": "enable uart",
+        "x": 270,
+        "y": 620,
+        "wires": [
+            [
+                "79a71170.3519f"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "79a71170.3519f",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 430,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "caa47c97.2cc1f",
+        "type": "comment",
+        "z": "b7697d09.8c3b2",
+        "name": "Config UART Pins",
+        "info": "",
+        "x": 150,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "db02795c.f61ca8",
+        "type": "function",
+        "z": "b7697d09.8c3b2",
+        "name": "AB Decode (Old Droplets)",
+        "func": "const hexString = msg.payload;\n\nmsg.nodeId = hexString.substring(0, 8);\nmsg.temp = parseInt(\"0x\" + hexString.substring(10, 12) + hexString.substring(8, 10)) / 100;\nmsg.pressure = parseInt(\"0x\" + hexString.substring(14, 16) + hexString.substring(12, 14)) / 10;\nmsg.humidity = parseInt(\"0x\" + hexString.substring(16, 18)) % 128;\nmsg.movement = parseInt(\"0x\" + hexString.substring(16, 18)) > 127 ? true : false;\nmsg.light = parseInt(\"0x\" + hexString.substring(20, 22) + hexString.substring(18, 20));\nmsg.voltage = parseInt(\"0x\" + hexString.substring(22, 24)) / 50;\nmsg.checksum = \"0x\" + hexString.substring(30, 32);\nmsg.rssi = parseInt(\"0x\" + hexString.substring(32, 34)) * -1;\nmsg.snr = parseInt(\"0x\" + hexString.substring(34, 36)) / 10;\n\nnode.status({fill:\"blue\",shape:\"dot\",text:msg.nodeId});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 830,
+        "y": 340,
+        "wires": [
+            [
+                "fe1d1d0a.6131",
+                "a86ad53b.cc9648"
+            ]
+        ]
+    },
+    {
+        "id": "519b8eaf.53776",
+        "type": "function",
+        "z": "b7697d09.8c3b2",
+        "name": "Payload Checksum and Distributor ",
+        "func": "const hexString = msg.payload;\n\nconst dChecksum = parseInt(hexString.substring(26, 28), 16);\nlet pChecksum = 0;\n\nfor (i = 0; i < 13; i++) {\n    const currentbyte = parseInt(hexString.substring((i * 2), (i * 2 + 2)), 16);\n    pChecksum ^= currentbyte;\n}\n\nif (dChecksum != pChecksum) {\n    msg.checksumflag = false;\n} else {\n    msg.checksumflag = true; \n    msg.checksumcheck = hexString.substring(26, 28);\n} \n\nmsg.messageVersion = parseInt(\"0x\" + hexString.substring(2, 4));\n\nswitch (msg.messageVersion) {\n    case 170: // AA identifies the Micro Edge LR-4\n        return [ msg, null, null, null, null ];\n    case 171: // AB identifies the Droplets with the old firmware\n        return [ null, msg, null, null, null ];\n    case 176: // B0 identifies the Droplet DL-TH Sensor\n        return [ null, null, msg, null, null ];\n    case 177: // B1 identifies the Droplet DL-THL Sensor\n        return [ null, null, null, msg, null ];\n    case 178: // B2 identifies the Droplet DL-THLM Sensor\n        return [ null, null, null, null, msg ];\n}",
+        "outputs": 5,
+        "noerr": 0,
+        "x": 500,
+        "y": 400,
+        "wires": [
+            [
+                "d19fb49d.dcc6a8"
+            ],
+            [
+                "db02795c.f61ca8"
+            ],
+            [
+                "763f9cbb.17d7e4"
+            ],
+            [
+                "796a0cb1.bb4d84"
+            ],
+            [
+                "83e56759.52a0e8"
+            ]
+        ]
+    },
+    {
+        "id": "d19fb49d.dcc6a8",
+        "type": "function",
+        "z": "b7697d09.8c3b2",
+        "name": "AA Decoder (LR-4)",
+        "func": "const hexString = msg.payload;\n\nmsg.nodeId = hexString.substring(0, 8);\nmsg.voltage = parseInt(\"0x\" + hexString.substring(22, 24)) / 50;\nmsg.pulses = parseInt(\"0x\" +  hexString.substring(8, 16));\nmsg.temp = parseInt(\"0x\" + hexString.substring(28, 30) + hexString.substring(26, 28)) / 100;\nmsg.rssi = parseInt(\"0x\" + hexString.substring(32, 34)) * -1;\nmsg.snr = parseInt(\"0x\" + hexString.substring(34, 36)) / 10;\n\nnode.status({fill:\"blue\",shape:\"dot\",text:msg.nodeId});\nreturn msg;\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 810,
+        "y": 280,
+        "wires": [
+            [
+                "c3fac146.f5ee3",
+                "803c3bfd.fe78d8",
+                "29476fec.e150c"
+            ]
+        ]
+    },
+    {
+        "id": "fe1d1d0a.6131",
+        "type": "function",
+        "z": "b7697d09.8c3b2",
+        "name": "Sensor data to Bonescript",
+        "func": "const sensorList = global.get('thingData').features.sensorList.properties.list || [];\n\nif (sensorList.includes(msg.nodeId)) {\n    msg.url = \"http://localhost:4000/points\";\n    msg.method = \"PATCH\";\n    msg.headers = {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    };\n    msg.payload = [\n        {\n            \"id\": `${msg.nodeId}_TEMP`,\n            \"value\": msg.temp || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_HUMIDITY`,\n            \"value\": msg.humidity || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_PRESSURE`,\n            \"value\": msg.pressure || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_MOVEMENT`,\n            \"value\": msg.movement || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_LUX`,\n            \"value\": msg.light || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_VOLTAGE`,\n            \"value\": msg.voltage || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_RSSI`,\n            \"value\": msg.rssi || 0,\n            \"priority\": 16\n        }\n    ];\n    node.status({fill:\"green\",shape:\"dot\",text:msg.nodeId + \" @\" + Date()});\n    node.send(msg);\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1070,
+        "y": 340,
+        "wires": [
+            [
+                "e6b94e94.6230c"
+            ]
+        ]
+    },
+    {
+        "id": "e6b94e94.6230c",
+        "type": "http request",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1270,
+        "y": 340,
+        "wires": [
+            [
+                "3ba9f19f.00acfe"
+            ]
+        ]
+    },
+    {
+        "id": "3ba9f19f.00acfe",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1550,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "763f9cbb.17d7e4",
+        "type": "function",
+        "z": "b7697d09.8c3b2",
+        "name": "B0 Decoder (TH)",
+        "func": "const hexString = msg.payload;\n\nmsg.nodeId = hexString.substring(0, 8);\nmsg.temp = parseInt(\"0x\" + hexString.substring(10, 12) + hexString.substring(8, 10)) / 100;\nmsg.pressure = parseInt(\"0x\" + hexString.substring(14, 16) + hexString.substring(12, 14)) / 10;\nmsg.humidity = parseInt(\"0x\" + hexString.substring(16, 18)) % 128;\nmsg.voltage = parseInt(\"0x\" + hexString.substring(22, 24)) / 50;\nmsg.checksum = \"0x\" + hexString.substring(30, 32);\nmsg.rssi = parseInt(\"0x\" + hexString.substring(32, 34)) * -1;\nmsg.snr = parseInt(\"0x\" + hexString.substring(34, 36)) / 10;\n\nnode.status({fill:\"blue\",shape:\"dot\",text:msg.nodeId});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 810,
+        "y": 400,
+        "wires": [
+            [
+                "b84cb4f9.3ab898",
+                "33de9d55.3146a2"
+            ]
+        ]
+    },
+    {
+        "id": "b84cb4f9.3ab898",
+        "type": "function",
+        "z": "b7697d09.8c3b2",
+        "name": "Sensor data to Bonescript",
+        "func": "const sensorList = global.get('thingData').features.sensorList.properties.list || [];\n\nif (sensorList.includes(msg.nodeId)) {\n    msg.url = \"http://localhost:4000/points\";\n    msg.method = \"PATCH\";\n    msg.headers = {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    };\n    msg.payload = [\n        {\n            \"id\": `${msg.nodeId}_TEMP`,\n            \"value\": msg.temp || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_HUMIDITY`,\n            \"value\": msg.humidity || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_PRESSURE`,\n            \"value\": msg.pressure || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_VOLTAGE`,\n            \"value\": msg.voltage || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_RSSI`,\n            \"value\": msg.rssi || 0,\n            \"priority\": 16\n        }\n    ];\n    node.status({fill:\"green\",shape:\"dot\",text:msg.nodeId + \" @\" + Date()});\n    node.send(msg);\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1070,
+        "y": 400,
+        "wires": [
+            [
+                "52a7ce22.e37c7"
+            ]
+        ]
+    },
+    {
+        "id": "52a7ce22.e37c7",
+        "type": "http request",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1270,
+        "y": 400,
+        "wires": [
+            [
+                "b2cacc3a.38cf3"
+            ]
+        ]
+    },
+    {
+        "id": "b2cacc3a.38cf3",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1550,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "83e56759.52a0e8",
+        "type": "function",
+        "z": "b7697d09.8c3b2",
+        "name": "B2 Decoder (THLM)",
+        "func": "const hexString = msg.payload;\n\nmsg.nodeId = hexString.substring(0, 8);\nmsg.temp = parseInt(\"0x\" + hexString.substring(10, 12) + hexString.substring(8, 10)) / 100;\nmsg.pressure = parseInt(\"0x\" + hexString.substring(14, 16) + hexString.substring(12, 14)) / 10;\nmsg.humidity = parseInt(\"0x\" + hexString.substring(16, 18)) % 128;\nmsg.movement = parseInt(\"0x\" + hexString.substring(16, 18)) > 127 ? true : false;\nmsg.light = parseInt(\"0x\" + hexString.substring(20, 22) + hexString.substring(18, 20));\nmsg.voltage = parseInt(\"0x\" + hexString.substring(22, 24)) / 50;\nmsg.checksum = \"0x\" + hexString.substring(30, 32);\nmsg.rssi = parseInt(\"0x\" + hexString.substring(32, 34)) * -1;\nmsg.snr = parseInt(\"0x\" + hexString.substring(34, 36)) / 10;\n\nnode.status({fill:\"blue\",shape:\"dot\",text:msg.nodeId});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 820,
+        "y": 520,
+        "wires": [
+            [
+                "b26d9e4b.36dd6",
+                "be629d0a.01dbe"
+            ]
+        ]
+    },
+    {
+        "id": "b26d9e4b.36dd6",
+        "type": "function",
+        "z": "b7697d09.8c3b2",
+        "name": "Sensor data to Bonescript",
+        "func": "const sensorList = global.get('thingData').features.sensorList.properties.list || [];\n\nif (sensorList.includes(msg.nodeId)) {\n    msg.url = \"http://localhost:4000/points\";\n    msg.method = \"PATCH\";\n    msg.headers = {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    };\n    msg.payload = [\n        {\n            \"id\": `${msg.nodeId}_TEMP`,\n            \"value\": msg.temp || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_HUMIDITY`,\n            \"value\": msg.humidity || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_PRESSURE`,\n            \"value\": msg.pressure || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_MOVEMENT`,\n            \"value\": msg.movement || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_LUX`,\n            \"value\": msg.light || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_VOLTAGE`,\n            \"value\": msg.voltage || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_RSSI`,\n            \"value\": msg.rssi || 0,\n            \"priority\": 16\n        }\n    ];\n    node.status({fill:\"green\",shape:\"dot\",text:msg.nodeId + \" @\" + Date()});\n    node.send(msg);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1070,
+        "y": 520,
+        "wires": [
+            [
+                "2380f956.bc1c16"
+            ]
+        ]
+    },
+    {
+        "id": "2380f956.bc1c16",
+        "type": "http request",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1270,
+        "y": 520,
+        "wires": [
+            [
+                "104ef63a.c6a9aa"
+            ]
+        ]
+    },
+    {
+        "id": "104ef63a.c6a9aa",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1550,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "796a0cb1.bb4d84",
+        "type": "function",
+        "z": "b7697d09.8c3b2",
+        "name": "B1 Decoder (THL)",
+        "func": "const hexString = msg.payload;\n\nmsg.nodeId = hexString.substring(0, 8);\nmsg.temp = parseInt(\"0x\" + hexString.substring(10, 12) + hexString.substring(8, 10)) / 100;\nmsg.pressure = parseInt(\"0x\" + hexString.substring(14, 16) + hexString.substring(12, 14)) / 10;\nmsg.humidity = parseInt(\"0x\" + hexString.substring(16, 18)) % 128;\nmsg.light = parseInt(\"0x\" + hexString.substring(20, 22) + hexString.substring(18, 20));\nmsg.voltage = parseInt(\"0x\" + hexString.substring(22, 24)) / 50;\nmsg.checksum = \"0x\" + hexString.substring(30, 32);\nmsg.rssi = parseInt(\"0x\" + hexString.substring(32, 34)) * -1;\nmsg.snr = parseInt(\"0x\" + hexString.substring(34, 36)) / 10;\n\nnode.status({fill:\"blue\",shape:\"dot\",text:msg.nodeId});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 810,
+        "y": 460,
+        "wires": [
+            [
+                "ec1d8db.e85af7",
+                "84d5b8ba.38f2e8"
+            ]
+        ]
+    },
+    {
+        "id": "ec1d8db.e85af7",
+        "type": "function",
+        "z": "b7697d09.8c3b2",
+        "name": "Sensor data to Bonescript",
+        "func": "const sensorList = global.get('thingData').features.sensorList.properties.list || [];\n\nif (sensorList.includes(msg.nodeId)) {\n    msg.url = \"http://localhost:4000/points\";\n    msg.method = \"PATCH\";\n    msg.headers = {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    };\n    msg.payload = [\n        {\n            \"id\": `${msg.nodeId}_TEMP`,\n            \"value\": msg.temp || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_HUMIDITY`,\n            \"value\": msg.humidity || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_PRESSURE`,\n            \"value\": msg.pressure || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_LUX`,\n            \"value\": msg.light || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_VOLTAGE`,\n            \"value\": msg.voltage || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_RSSI`,\n            \"value\": msg.rssi || 0,\n            \"priority\": 16\n        }\n    ];\n    node.status({fill:\"green\",shape:\"dot\",text:msg.nodeId + \" @\" + Date()});\n    node.send(msg);\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1070,
+        "y": 460,
+        "wires": [
+            [
+                "ac94d754.0496a8"
+            ]
+        ]
+    },
+    {
+        "id": "ac94d754.0496a8",
+        "type": "http request",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1270,
+        "y": 460,
+        "wires": [
+            [
+                "dc1cb877.7bd958"
+            ]
+        ]
+    },
+    {
+        "id": "dc1cb877.7bd958",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1550,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "c3fac146.f5ee3",
+        "type": "function",
+        "z": "b7697d09.8c3b2",
+        "name": "Sensor data to Bonescript",
+        "func": "const sensorList = global.get('thingData').features.sensorList.properties.list || [];\n\nif (sensorList.includes(msg.nodeId)) {\n    msg.url = \"http://localhost:4000/points\";\n    msg.method = \"PATCH\";\n    msg.headers = {\n        \"Authorization\": global.get(\"apiAuth\"),\n        \"content-type\": \"application/json\"\n    };\n    msg.payload = [\n        {\n            \"id\": `${msg.nodeId}_PULSES`,\n            \"value\": msg.pulses || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_TEMP`,\n            \"value\": msg.temp || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_VOLTAGE`,\n            \"value\": msg.voltage || 0,\n            \"priority\": 16\n        },\n        {\n            \"id\": `${msg.nodeId}_RSSI`,\n            \"value\": msg.rssi || 0,\n            \"priority\": 16\n        }\n    ];\n    node.status({fill:\"green\",shape:\"dot\",text:msg.nodeId + \" @\" + Date()});\n    node.send(msg);\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1070,
+        "y": 280,
+        "wires": [
+            [
+                "1f817e69.846842"
+            ]
+        ]
+    },
+    {
+        "id": "1f817e69.846842",
+        "type": "http request",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 1270,
+        "y": 280,
+        "wires": [
+            [
+                "462b239c.de87dc"
+            ]
+        ]
+    },
+    {
+        "id": "462b239c.de87dc",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1550,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "846285c.0d24678",
+        "type": "function",
+        "z": "b7697d09.8c3b2",
+        "name": "Create AB (Old Droplets) Point",
+        "func": "const ids = [\n    // Add node ids here e.g. \"24AAB36F\"\n];\n\nids.forEach(function(id) {\n    const points = [\n        {\n            id: id + \"_TEMP\",\n            body: {\n                kind: \"Number\",\n                unit: \"°C\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"air\",\n                    \"temp\"\n                ]\n            }\n        },\n        {\n            id: id + \"_HUMIDITY\",\n            body: {\n                kind: \"Number\",\n                unit: \"%\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"air\",\n                    \"humidity\"\n                ]\n            }\n        },\n        {\n            id: id + \"_PRESSURE\",\n            body: {\n                kind: \"Number\",\n                unit: \"hPa\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"air\",\n                    \"pressure\"\n                ]\n            }\n        },\n        {\n            id: id + \"_MOVEMENT\",\n            body: {\n                kind: \"Bool\",\n                unit: \"null\",\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"occupied\"\n                ]\n            }\n        },\n        {\n            id: id + \"_LUX\",\n            body: {\n                kind: \"Number\",\n                unit: \"lx\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"lightlevel\"\n                ]\n            }\n        },\n        {\n            id: id + \"_VOLTAGE\",\n            body: {\n                kind: \"Number\",\n                unit: \"V\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"volt\",\n                    \"mag\"\n                ]\n            }\n        },\n        {\n            id: id + \"_RSSI\",\n            body: {\n                kind: \"Number\",\n                unit: \"dBm\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\"\n                ]\n            }\n        }\n    ];\n    \n    points.forEach(function(point) {\n    \tmsg = {\n    \t    \"url\": \"http://localhost:4000/points/\" + point.id,\n    \t    \"method\": \"POST\",\n    \t    \"headers\": {\n    \t        \"Authorization\": global.get(\"apiAuth\"),\n    \t        \"content-type\": \"application/json\"\n    \t    },\n    \t    \"payload\": point.body\n    \t};\n    \tnode.send([msg, null]);\n    });\n    \n    msg = {\n\t    \"url\": \"http://localhost:4000/sensor-list\",\n\t    \"method\": \"POST\",\n\t    \"headers\": {\n\t        \"Authorization\": global.get(\"apiAuth\"),\n\t        \"content-type\": \"application/json\"\n\t    },\n\t    \"payload\": [id]\n\t};\n    node.send([null, msg]);\n    \n});",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 330,
+        "y": 800,
+        "wires": [
+            [
+                "7ace987a.716788"
+            ],
+            [
+                "f668f63d.e89ea8"
+            ]
+        ]
+    },
+    {
+        "id": "7ace987a.716788",
+        "type": "http request",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "method": "use",
+        "ret": "obj",
+        "url": "",
+        "tls": "",
+        "x": 570,
+        "y": 780,
+        "wires": [
+            [
+                "7d0dc5f2.25891c"
+            ]
+        ]
+    },
+    {
+        "id": "7d0dc5f2.25891c",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 730,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "c18d1082.1c4d8",
+        "type": "function",
+        "z": "b7697d09.8c3b2",
+        "name": "Create B0 (TH) Points",
+        "func": "const ids = [\n    // Add node ids here e.g. \"24AAB36F\"\n];\n\nids.forEach(function(id) {\n    const points = [\n        {\n            id: id + \"_TEMP\",\n            body: {\n                kind: \"Number\",\n                unit: \"°C\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"air\",\n                    \"temp\"\n                ]\n            }\n        },\n        {\n            id: id + \"_HUMIDITY\",\n            body: {\n                kind: \"Number\",\n                unit: \"%\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"air\",\n                    \"humidity\"\n                ]\n            }\n        },\n        {\n            id: id + \"_PRESSURE\",\n            body: {\n                kind: \"Number\",\n                unit: \"hPa\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"air\",\n                    \"pressure\"\n                ]\n            }\n        },\n        {\n            id: id + \"_VOLTAGE\",\n            body: {\n                kind: \"Number\",\n                unit: \"V\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"volt\",\n                    \"mag\"\n                ]\n            }\n        },\n        {\n            id: id + \"_RSSI\",\n            body: {\n                kind: \"Number\",\n                unit: \"dBm\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\"\n                ]\n            }\n        }\n    ];\n\n    points.forEach(function(point) {\n    \tmsg = {\n    \t    \"url\": \"http://localhost:4000/points/\" + point.id,\n    \t    \"method\": \"POST\",\n    \t    \"headers\": {\n    \t        \"Authorization\": global.get(\"apiAuth\"),\n    \t        \"content-type\": \"application/json\"\n    \t    },\n    \t    \"payload\": point.body\n    \t};\n    \tnode.send([msg, null]);\n    });\n    \n    msg = {\n\t    \"url\": \"http://localhost:4000/sensor-list\",\n\t    \"method\": \"POST\",\n\t    \"headers\": {\n\t        \"Authorization\": global.get(\"apiAuth\"),\n\t        \"content-type\": \"application/json\"\n\t    },\n\t    \"payload\": [id]\n\t};\n    node.send([null, msg]);\n    \n});",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 300,
+        "y": 880,
+        "wires": [
+            [
+                "449db807.4032f8"
+            ],
+            [
+                "1cb6998f.f16256"
+            ]
+        ]
+    },
+    {
+        "id": "449db807.4032f8",
+        "type": "http request",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "method": "use",
+        "ret": "obj",
+        "url": "",
+        "tls": "",
+        "x": 570,
+        "y": 860,
+        "wires": [
+            [
+                "ecdb5c36.ba79d"
+            ]
+        ]
+    },
+    {
+        "id": "ecdb5c36.ba79d",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 730,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "86cafe1f.ae1d",
+        "type": "function",
+        "z": "b7697d09.8c3b2",
+        "name": "Create B1 (THL) Point",
+        "func": "const ids = [\n    // Add node ids here e.g. \"24AAB36F\"\n];\n\nids.forEach(function(id) {\n    const points = [\n        {\n            id: id + \"_TEMP\",\n            body: {\n                kind: \"Number\",\n                unit: \"°C\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"air\",\n                    \"temp\"\n                ]\n            }\n        },\n        {\n            id: id + \"_HUMIDITY\",\n            body: {\n                kind: \"Number\",\n                unit: \"%\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"air\",\n                    \"humidity\"\n                ]\n            }\n        },\n        {\n            id: id + \"_PRESSURE\",\n            body: {\n                kind: \"Number\",\n                unit: \"hPa\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"air\",\n                    \"pressure\"\n                ]\n            }\n        },\n        {\n            id: id + \"_LUX\",\n            body: {\n                kind: \"Number\",\n                unit: \"lx\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"lightlevel\"\n                ]\n            }\n        },\n        {\n            id: id + \"_VOLTAGE\",\n            body: {\n                kind: \"Number\",\n                unit: \"V\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"volt\",\n                    \"mag\"\n                ]\n            }\n        },\n        {\n            id: id + \"_RSSI\",\n            body: {\n                kind: \"Number\",\n                unit: \"dBm\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\"\n                ]\n            }\n        }\n    ];\n\n    points.forEach(function(point) {\n    \tmsg = {\n    \t    \"url\": \"http://localhost:4000/points/\" + point.id,\n    \t    \"method\": \"POST\",\n    \t    \"headers\": {\n    \t        \"Authorization\": global.get(\"apiAuth\"),\n    \t        \"content-type\": \"application/json\"\n    \t    },\n    \t    \"payload\": point.body\n    \t};\n    \tnode.send([msg, null]);\n    });\n    \n    msg = {\n\t    \"url\": \"http://localhost:4000/sensor-list\",\n\t    \"method\": \"POST\",\n\t    \"headers\": {\n\t        \"Authorization\": global.get(\"apiAuth\"),\n\t        \"content-type\": \"application/json\"\n\t    },\n\t    \"payload\": [id]\n\t};\n    node.send([null, msg]);\n    \n});",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 300,
+        "y": 960,
+        "wires": [
+            [
+                "52a2e4cd.229acc"
+            ],
+            [
+                "42cfe6a5.0ac768"
+            ]
+        ]
+    },
+    {
+        "id": "52a2e4cd.229acc",
+        "type": "http request",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "method": "use",
+        "ret": "obj",
+        "url": "",
+        "tls": "",
+        "x": 570,
+        "y": 940,
+        "wires": [
+            [
+                "56768f1d.d023e"
+            ]
+        ]
+    },
+    {
+        "id": "56768f1d.d023e",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 730,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "e9486c4c.ee9c6",
+        "type": "function",
+        "z": "b7697d09.8c3b2",
+        "name": "Create B2 (THLM) Point",
+        "func": "const ids = [\n    // Add node ids here e.g. \"24AAB36F\"\n    \"8CB2DC4F\"\n];\n\nids.forEach(function(id) {\n    const points = [\n        {\n            id: id + \"_TEMP\",\n            body: {\n                kind: \"Number\",\n                unit: \"°C\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"air\",\n                    \"temp\"\n                ]\n            }\n        },\n        {\n            id: id + \"_HUMIDITY\",\n            body: {\n                kind: \"Number\",\n                unit: \"%\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"air\",\n                    \"humidity\"\n                ]\n            }\n        },\n        {\n            id: id + \"_PRESSURE\",\n            body: {\n                kind: \"Number\",\n                unit: \"hPa\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"air\",\n                    \"pressure\"\n                ]\n            }\n        },\n        {\n            id: id + \"_MOVEMENT\",\n            body: {\n                kind: \"Bool\",\n                unit: \"null\",\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"occupied\"\n                ]\n            }\n        },\n        {\n            id: id + \"_LUX\",\n            body: {\n                kind: \"Number\",\n                unit: \"lx\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"lightlevel\"\n                ]\n            }\n        },\n        {\n            id: id + \"_VOLTAGE\",\n            body: {\n                kind: \"Number\",\n                unit: \"V\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"volt\",\n                    \"mag\"\n                ]\n            }\n        },\n        {\n            id: id + \"_RSSI\",\n            body: {\n                kind: \"Number\",\n                unit: \"dBm\",\n                historySettings: {\n                    type: \"periodic\",\n                    schedule: \"0 */15 * * * *\",\n                    size: 672\n                },\n                tags: [\n                    \"point\",\n                    \"sensor\"\n                ]\n            }\n        }\n    ];\n    \n    points.forEach(function(point) {\n    \tmsg = {\n    \t    \"url\": \"http://localhost:4000/points/\" + point.id,\n    \t    \"method\": \"POST\",\n    \t    \"headers\": {\n    \t        \"Authorization\": global.get(\"apiAuth\"),\n    \t        \"content-type\": \"application/json\"\n    \t    },\n    \t    \"payload\": point.body\n    \t};\n    \tnode.send([msg, null]);\n    });\n    \n    msg = {\n\t    \"url\": \"http://localhost:4000/sensor-list\",\n\t    \"method\": \"POST\",\n\t    \"headers\": {\n\t        \"Authorization\": global.get(\"apiAuth\"),\n\t        \"content-type\": \"application/json\"\n\t    },\n\t    \"payload\": [id]\n\t};\n    node.send([null, msg]);\n    \n});",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 310,
+        "y": 1040,
+        "wires": [
+            [
+                "53bb3a85.3ec804"
+            ],
+            [
+                "1c3b9d95.dbe7e2"
+            ]
+        ]
+    },
+    {
+        "id": "53bb3a85.3ec804",
+        "type": "http request",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "method": "use",
+        "ret": "obj",
+        "url": "",
+        "tls": "",
+        "x": 570,
+        "y": 1020,
+        "wires": [
+            [
+                "ee58cd1b.8bfce"
+            ]
+        ]
+    },
+    {
+        "id": "ee58cd1b.8bfce",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 730,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "4e4b3895.fb43d8",
+        "type": "function",
+        "z": "b7697d09.8c3b2",
+        "name": "Create AA (LR-4) Points",
+        "func": "const ids = [\n    \"E3AA0DD0\" // int;1 p = 0.5L 816(6261) \n];\n\nids.forEach(function(id) {\n    const points = [\n    \t{\n    \t\tid: id + \"_PULSES\",\n    \t\tbody: {\n    \t\t\tkind: \"Number\",\n    \t\t\tunit: \"null\",\n                tags: [\n                    \"point\",\n                    \"sensor\"\n                ]\n    \t\t}\n    \t},\n    \t{\n    \t\tid: id + \"_TEMP\",\n    \t\tbody: {\n    \t\t\tkind: \"Number\",\n    \t\t\tunit: \"°C\",\n    \t\t\thistorySettings: {\n    \t\t\t\ttype: \"periodic\",\n    \t\t\t\tschedule: \"0 */15 * * * *\",\n    \t\t\t\tsize: 672\n    \t\t\t},\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"air\",\n                    \"temp\"\n                ]\n    \t\t}\n    \t},\n    \t{\n    \t\tid: id + \"_VOLTAGE\",\n    \t\tbody: {\n    \t\t\tkind: \"Number\",\n    \t\t\tunit: \"V\",\n    \t\t\thistorySettings: {\n    \t\t\t\ttype: \"periodic\",\n    \t\t\t\tschedule: \"0 */15 * * * *\",\n    \t\t\t\tsize: 672\n    \t\t\t},\n                tags: [\n                    \"point\",\n                    \"sensor\",\n                    \"volt\",\n                    \"mag\"\n                ]\n    \t\t}\n    \t},\n    \t{\n    \t\tid: id + \"_RSSI\",\n    \t\tbody: {\n    \t\t\tkind: \"Number\",\n    \t\t\tunit: \"dBm\",\n    \t\t\thistorySettings: {\n    \t\t\t\ttype: \"periodic\",\n    \t\t\t\tschedule: \"0 */15 * * * *\",\n    \t\t\t\tsize: 672\n    \t\t\t},\n                tags: [\n                    \"point\",\n                    \"sensor\"\n                ]\n    \t\t}\n    \t}\n    ];\n    \n    points.forEach(function(point) {\n    \tmsg = {\n    \t    \"url\": \"http://localhost:4000/points/\" + point.id,\n    \t    \"method\": \"POST\",\n    \t    \"headers\": {\n    \t        \"Authorization\": global.get(\"apiAuth\"),\n    \t        \"content-type\": \"application/json\"\n    \t    },\n    \t    \"payload\": point.body\n    \t};\n    \tnode.send([msg, null]);\n    });\n    \n    msg = {\n\t    \"url\": \"http://localhost:4000/sensor-list\",\n\t    \"method\": \"POST\",\n\t    \"headers\": {\n\t        \"Authorization\": global.get(\"apiAuth\"),\n\t        \"content-type\": \"application/json\"\n\t    },\n\t    \"payload\": [id]\n\t};\n    node.send([null, msg]);\n    \n});",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 310,
+        "y": 720,
+        "wires": [
+            [
+                "2f2037a8.4b8e88"
+            ],
+            [
+                "6f989e8a.01dde"
+            ]
+        ]
+    },
+    {
+        "id": "2f2037a8.4b8e88",
+        "type": "http request",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "method": "use",
+        "ret": "obj",
+        "url": "",
+        "tls": "",
+        "x": 570,
+        "y": 700,
+        "wires": [
+            [
+                "fb9b6395.d806d"
+            ]
+        ]
+    },
+    {
+        "id": "fb9b6395.d806d",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 730,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "518d9491.1ceb7c",
+        "type": "inject",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 130,
+        "y": 720,
+        "wires": [
+            [
+                "4e4b3895.fb43d8"
+            ]
+        ]
+    },
+    {
+        "id": "e18bc8f9.803578",
+        "type": "inject",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 130,
+        "y": 800,
+        "wires": [
+            [
+                "846285c.0d24678"
+            ]
+        ]
+    },
+    {
+        "id": "3bee2137.c97c9e",
+        "type": "inject",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 130,
+        "y": 880,
+        "wires": [
+            [
+                "c18d1082.1c4d8"
+            ]
+        ]
+    },
+    {
+        "id": "a67693a5.d901c",
+        "type": "inject",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 130,
+        "y": 960,
+        "wires": [
+            [
+                "86cafe1f.ae1d"
+            ]
+        ]
+    },
+    {
+        "id": "e666fbba.c05e18",
+        "type": "inject",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 130,
+        "y": 1040,
+        "wires": [
+            [
+                "e9486c4c.ee9c6"
+            ]
+        ]
+    },
+    {
+        "id": "9acbb279.1921a",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 730,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "6f989e8a.01dde",
+        "type": "http request",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 570,
+        "y": 740,
+        "wires": [
+            [
+                "9acbb279.1921a"
+            ]
+        ]
+    },
+    {
+        "id": "f668f63d.e89ea8",
+        "type": "http request",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 570,
+        "y": 820,
+        "wires": [
+            [
+                "4cb66e74.fe1c6"
+            ]
+        ]
+    },
+    {
+        "id": "4cb66e74.fe1c6",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 730,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "1cb6998f.f16256",
+        "type": "http request",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 570,
+        "y": 900,
+        "wires": [
+            [
+                "ca9b15f7.3de588"
+            ]
+        ]
+    },
+    {
+        "id": "ca9b15f7.3de588",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 730,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "42cfe6a5.0ac768",
+        "type": "http request",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 570,
+        "y": 980,
+        "wires": [
+            [
+                "21e6e2b1.e1a95e"
+            ]
+        ]
+    },
+    {
+        "id": "21e6e2b1.e1a95e",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 730,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "1c3b9d95.dbe7e2",
+        "type": "http request",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "url": "",
+        "tls": "",
+        "x": 570,
+        "y": 1060,
+        "wires": [
+            [
+                "fe10da02.7966c8"
+            ]
+        ]
+    },
+    {
+        "id": "fe10da02.7966c8",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 730,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "be629d0a.01dbe",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1410,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "803c3bfd.fe78d8",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1410,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "a86ad53b.cc9648",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1410,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "84d5b8ba.38f2e8",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1410,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "33de9d55.3146a2",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1410,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "29476fec.e150c",
+        "type": "debug",
+        "z": "b7697d09.8c3b2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 1090,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "e61c6fae.b4d69",
+        "type": "serial-port",
+        "z": "",
+        "serialport": "/dev/ttyS1",
+        "serialbaud": "115200",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": false,
+        "responsetimeout": "10000"
+    }
+]
