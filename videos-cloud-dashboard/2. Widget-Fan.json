@@ -56,7 +56,7 @@
          "h":8
       }
    },
-   "dataEditorCode":"if (data.value === 1) {\ndata.status = \"On\";\ndata.value = \"Air Flow\";\n} else {\ndata.status = \"Off\";\ndata.value = \"No Air Flow\";\n}",
+   "dataEditorCode":"if (data.value === 1) {\ndata.status = \"On\";\ndata.value = \"Fan On\";\n} else {\ndata.status = \"Off\";\ndata.value = \"Fan Off\";\n}",
    "showTimestamp":false,
    "fontSize":24,
    "fontColour":""
