@@ -1,0 +1,23 @@
+UPGRADING RC 27.08.21
+
+Upgrade Rubix-Service: v1.8.5 (it has the modbus addition for routing)
+Upgrade wires-plat to: v2.0.0 (to support new point-server and modbus routes)
+
+Install Modbus at first before upgrading Modbus (important); this must be installed at first otherwise data will be removed out
+Upgrade point server to: v2.0.0 (it will delete Modbus database, so upgrade only after Modbus installation)
+IN WIRES update the env  for the modbus PORT MODBUS_MASTER_PORT to port 1516
+
+Stop rubix-service, so it automatically installs new one: 
+sudo systemctl stop nubeio-rubix-service.service
+
+Download bios from the GitHub: 
+wget https://github.com/NubeIO/rubix-bios/releases/download/v1.5.2/rubix-bios-1.5.2-d5764dc0.armv7.zip
+
+Extract BIOS:
+unzip rubix-bios-1.5.2-d5764dc0.armv7.zip
+
+Install it: 
+sudo ./rubix-bios -p 1615 -g /data/rubix-bios -d data -c config -a apps --prod --install --auth --device-type armv7 --token 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
+
+sudo rm -r /data/rubix-service/config/apps.json
+sudo systemctl restart nubeio-rubix-bios.service
